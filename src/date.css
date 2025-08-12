@@ -1,0 +1,51 @@
+.main-div {
+    width: 100%;
+}
+
+.text-div {
+    height: 400px;
+    width: 30%;
+    min-width: 400px;
+    border-radius: 15px;
+    margin: -100px auto 0px;
+    background-color: red;
+}
+
+
+
+
+
+button {
+    border-radius: 20px;
+    padding: 8px 30px;
+}
+
+.yes-btn {
+    background-color: green;
+    margin-left: -110px;
+    margin-top: 15px;
+}
+
+.no-btn {
+    position: absolute;
+    top: 68.88%;
+    left: 51%;
+}
+
+button:hover {
+    border: 1px solid pink
+}
+
+
+
+.photo-calendar-row {
+    background-color: red;
+    padding: 10px;
+    border-radius: 10px;
+    width: 60vw;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
