@@ -1,115 +1,39 @@
-// import React, { useState } from 'react';
-// import './date.css';
-// import dayjs from 'dayjs';
-// import type { Dayjs } from 'dayjs';
-// import dayLocaleData from 'dayjs/plugin/localeData';
-// import { Button, Col, Row, Calendar, theme } from 'antd';
-
-// const DateGame = () => {
-//     const [mainDiv, setMainDiv] = useState<boolean>(true)
-//     const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
-
-//     dayjs.extend(dayLocaleData);
-
-//     const moveBtn = () => {
-//         const noBtn = document.getElementsByClassName("no-btn")[0] as HTMLElement;
-//         if (!noBtn) return;
-
-//         const maxX = window.innerWidth - noBtn.offsetWidth;
-//         const maxY = window.innerHeight - noBtn.offsetHeight;
-
-//         const randomX = Math.random() * maxX;
-//         const randomY = Math.random() * maxY;
-
-//         noBtn.style.position = "absolute";
-//         noBtn.style.left = randomX + "px";
-//         noBtn.style.top = randomY + "px";
-//     };
-
-//     const { token } = theme.useToken();
-
-//     const wrapperStyle: React.CSSProperties = {
-//         width: 300,
-//         border: `1px solid ${token.colorBorderSecondary}`,
-//         borderRadius: token.borderRadiusLG,
-//     };
-
-//     const onDateSelect = (value: Dayjs) => {
-//         setSelectedDate(value);
-//         console.log("Date selected:", value.format("DD-MM-YYYY"));
-//     };
-
-//     const saveDate = () => {
-//         if (!selectedDate) {
-//             alert("Please select a date first!");
-//             return;
-//         }
-//         alert(`Yay! Saved the date: ${selectedDate.format("DD-MM-YYYY")}`);
-//     };
-
-//     return (
-
-//         <div className='main-div'>
-//             {mainDiv === true ?
-//                 <>
-//                     <div className='text-div'>
-//                         Will you go on a date with me? 😊
-//                     </div>
-
-//                     <button className='yes-btn' onClick={() => [alert("YAYYYYYYYYYYYYYYYYYYYYYYY"), setMainDiv(false)]} >Yes</button>
-//                     <button className='no-btn' onMouseOver={moveBtn}>No</button>
-//                 </>
-//                 :
-//                 <>
-//                     <div>
-//                         <Button onClick={() => setMainDiv(true)} > Back  </Button>
-//                     </div>
-//                     <Row className='photo-calendar-row' >
-//                         <Col span={12} style={{ background: "pink", height: "97%", width: "97%", }} >
-
-//                         </Col>
-
-//                         <Col span={11} style={{ display: "flex", flexDirection: "column", margin: "0 auto", alignItems: "center" }} >
-//                             <p>When can i take this beauty out?</p>
-
-//                             <div style={wrapperStyle}>
-//                                 <Calendar fullscreen={false} onSelect={onDateSelect} />
-//                             </div>
-//                             <Button onClick={saveDate} >
-//                                 See you soon...
-//                             </Button>
-
-//                         </Col>
-
-//                     </Row>
-//                 </>
-//             }
-//         </div>
-//     );
-// };
-
-// export default DateGame;
-
-
 import React, { useState } from 'react';
 import './date.css';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 import dayLocaleData from 'dayjs/plugin/localeData';
-import { Button, Col, Row, Calendar, Modal, Input, theme } from 'antd';
-import type { CalendarProps } from 'antd';
 import emailjs from 'emailjs-com';
+import type { CalendarProps } from 'antd';
+import { Button, Col, Row, Calendar, Modal, Input, message } from 'antd';
 
 const DateGame = () => {
-    const [mainDiv, setMainDiv] = useState(true);
     const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [recipientEmails, setRecipientEmails] = useState("");
-    const [yourEmail, setYourEmail] = useState("");
-    const [specialEmail, setSpecialEmail] = useState("")
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [recipientEmails, setRecipientEmails] = useState<string>("");
+    const [yourEmail, setYourEmail] = useState<string>("");
+    const [specialEmail, setSpecialEmail] = useState<string>("")
+    const [timesHovered, setTimesHovered] = useState<number>(0)
+    const [open20TimesModal, setOpen20TimesModal] = useState<boolean>(false)
+    const [landingPage, setLandingPage] = useState<boolean>(false)
+    const [dateAskingPage, setDateAskingPage] = useState<boolean>(true)
+    const [herName, setHerName] = useState<string>("")
+    const [hisName, setHisName] = useState<string>("")
+
+
+    const images = Array.from({ length: 9 }, (_, i) => `/images/cupid-images/image-${i + 1}.png`);
+
+    const handleImageChange = (timesHovered: number) => {
+        if (timesHovered >= 20) return "someimage";
+
+        const index = Math.floor(timesHovered / 2);
+        return images[index] || images[0];
+    };
+
 
     dayjs.extend(dayLocaleData);
-    const { token } = theme.useToken();
+
+    const [messageApi, contextHolder] = message.useMessage();
 
     const onPanelChange = (value: Dayjs, mode: CalendarProps<Dayjs>['mode']) => {
         console.log(value.format('DD-MM-YYYY'), mode);
@@ -120,20 +44,59 @@ const DateGame = () => {
         console.log("Date selected:", value.format("DD-MM-YYYY"));
     };
 
+    // const moveBtn = () => {
+    //     const noBtn = document.getElementsByClassName("no-btn")[0] as HTMLElement;
+    //     if (!noBtn) return;
+
+    //     const maxX = window.innerWidth - noBtn.offsetWidth;
+    //     const maxY = window.innerHeight - noBtn.offsetHeight;
+
+    //     const randomX = Math.random() * maxX;
+    //     const randomY = Math.random() * maxY;
+
+    //     noBtn.style.position = "absolute";
+    //     noBtn.style.left = randomX + "px";
+    //     noBtn.style.top = randomY + "px";
+    // };
+
     const moveBtn = () => {
         const noBtn = document.getElementsByClassName("no-btn")[0] as HTMLElement;
         if (!noBtn) return;
 
-        const maxX = window.innerWidth - noBtn.offsetWidth;
-        const maxY = window.innerHeight - noBtn.offsetHeight;
+        const btnWidth = noBtn.offsetWidth;
+        const btnHeight = noBtn.offsetHeight;
+
+        // Keep inside viewport
+        const maxX = window.innerWidth - btnWidth - 20; // add small margin
+        const maxY = window.innerHeight - btnHeight - 20;
 
         const randomX = Math.random() * maxX;
         const randomY = Math.random() * maxY;
 
-        noBtn.style.position = "absolute";
+        noBtn.style.position = "fixed"; // fixed to viewport (not inside grid)
         noBtn.style.left = randomX + "px";
         noBtn.style.top = randomY + "px";
     };
+
+
+
+    const countHover = () => {
+        setTimesHovered(prev => {
+            const newCount = prev + 1;
+            if (newCount === 17) setOpen20TimesModal(true);
+            return newCount;
+        });
+        console.log(timesHovered);
+    }
+
+    const handleNoLoveBtn = () => {
+        alert("I hate you Biyach...........")
+    }
+
+    const handleYesLoveBtn = () => {
+        alert("Yes is clicked")
+    }
+
 
     const openModal = () => {
         if (!selectedDate) {
@@ -149,7 +112,9 @@ const DateGame = () => {
             return;
         }
 
-        const toEmails = [yourEmail, specialEmail].join(", "); // both recipients
+        setLandingPage(true)
+
+        const toEmails = [yourEmail, specialEmail].join(", ");
 
         const templateParams = {
             date: selectedDate?.format("DD-MM-YYYY"),
@@ -159,14 +124,14 @@ const DateGame = () => {
         };
 
         emailjs.send(
-            "service_will-u-g-t-d-w-m",   // Replace with your EmailJS service ID
-            "template_date_temp",         // Replace with your EmailJS template ID
+            "service_will-u-g-t-d-w-m",   // EmailJS service ID
+            "template_date_temp",         // EmailJS template ID
             // {
             //     date: selectedDate?.format("DD-MM-YYYY"),
             //     to_email: recipientEmails, // multiple emails, comma-separated
             // },
             templateParams,
-            "6G8dbqk7TIjwFrSX8"            // Replace with your EmailJS public key
+            "6G8dbqk7TIjwFrSX8"            // EmailJS public key
         ).then(() => {
             alert("💌 Email sent successfully to: " + recipientEmails);
             setIsModalOpen(false);
@@ -178,122 +143,159 @@ const DateGame = () => {
 
     const wrapperStyle: React.CSSProperties = {
         width: 300,
-        border: `1px solid ${token.colorBorderSecondary}`,
-        borderRadius: token.borderRadiusLG,
+        borderRadius: "20px",
     };
+
+    const handleLandingPage = () => {
+        if (hisName.trim() === "" || herName.trim() === "") {
+            messageApi.open({
+                type: "error",
+                content: "The dreamers names can't be empty",
+                icon: <span style={{ fontSize: "18px" }}>💔</span>,
+                style: { marginTop: "5vh" },
+                // duration:100
+            });
+            return;
+        }
+
+        setLandingPage(false);
+        setDateAskingPage(true);
+    };
+
 
     return (
         <div className='main-div'>
-            {mainDiv ? (
-                <>
-                    <div className='text-div'>
-                        Will you go on a date with me? 😊
-                    </div>
-                    <button
-                        className='yes-btn'
-                        onClick={() => {
-                            alert("YAYYYYYYYYYYYYYYYYYYYYYYY");
-                            setMainDiv(false);
-                        }}
-                    >
-                        Yes
-                    </button>
-                    <button className='no-btn' onMouseOver={moveBtn}>
-                        No
-                    </button>
-                </>
+            {landingPage ? (
+                <div className='landing-page' >
+                    <Row style={{ display: "flex", justifyContent: "space-around", alignItems: "center", paddingTop: "61vh", }} >
+                        <Row className='his-her-name-row'>
+                            <Col span={21} style={{ display: "flex", flexDirection: "column", alignItems: "start" }} >
+                                <p className='landing-page-text' style={{ marginTop: "-1vh", textAlign: "center" }} > Two names… two souls… one story waiting to unfold.</p>
+                                <div style={{ display: "flex" }} >
+                                    <p className='landing-page-text' style={{ marginTop: "0px", marginRight: "7px" }} >  What's your name, dear traveler?</p>
+                                    <Input value={herName} onChange={(e) => setHerName(e.target.value)} className='his-her-name-input' />
+                                </div>
+                                <div style={{ display: "flex" }}  >
+                                    <p className='landing-page-text' style={{ marginTop: "0px", marginRight: "7px" }} >And the name of the one who lights your soul? </p>
+                                    <Input value={hisName} onChange={(e) => setHisName(e.target.value)} className='his-her-name-input' />
+                                </div>
+                            </Col>
+                            <Col span={2} style={{ display: "flex", alignItems: "center", justifyContent: "center", marginLeft: "10px" }} >
+                                <div onClick={handleLandingPage} className='landing-page-btn' >
+                                    <svg className='landing-svg' viewBox="0 0 512 512" style={{ height: "24px", width: "24px", marginLeft: "2px", }}>
+                                        <path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"> </path>
+                                    </svg>
+                                </div>
+                            </Col>
+                        </Row>
+                    </Row>
+                    {contextHolder}
+                </div>
             ) : (
-                <>
-                    <div>
-                        <Button onClick={() => setMainDiv(true)}>Back</Button>
-                    </div>
-                    <Row className='photo-calendar-row'>
-                        <Col span={12} style={{ background: "pink", height: "97%", width: "97%" }}></Col>
-                        <Col
-                            span={11}
-                            style={{
-                                display: "flex",
-                                flexDirection: "column",
-                                margin: "0 auto",
-                                alignItems: "center",
+                dateAskingPage ? (
+                    <>
+                        <div className='date-asking-page'  >
+                            <div className='text-div'>
+                                <p style={{ margin: "10px" }} > <span style={{ fontFamily: "HestinaFontbyKeithzo", fontSize: "1.5rem" }} >  {herName.charAt(0).toUpperCase() + herName.slice(1).toLowerCase()} </span> will you go on a date with me ? </p>
+                                <div style={{ width: "69%", background: "red", height: "80%", display: "flex", margin: "0 auto", borderRadius: "15px" }} >
+                                    <img src={handleImageChange(timesHovered)} alt='cupid-image' style={{ borderRadius: "15px" }} />
+                                </div>
+                            </div>
+
+                            {/* <button onClick={() => [setLandingPage(true), setDateAskingPage(false)]} style={{ position: "absolute", top: "100px", left: "700px" }} > back </button> */}
+
+                            <Row gutter={[16, 16]} >
+                                <Col span={12} >
+                                    <button className='yes-btn' onClick={() => { setDateAskingPage(false); }} > Yes </button>
+                                </Col>
+                                <Col span={12} >
+                                    <button className='no-btn' onMouseOver={() => { moveBtn(); countHover(); }}> No </button>
+                                </Col>
+                            </Row>
+
+
+                            <Modal open={open20TimesModal} onCancel={() => setOpen20TimesModal(false)} >
+                                <p> Do you really love Me </p>
+                                <Button onClick={handleYesLoveBtn} >
+                                    Haha! I was just playing with the NO button.
+                                </Button>
+
+                                <Button onClick={handleNoLoveBtn} >
+                                    No
+                                </Button>
+                            </Modal>
+                        </div >
+                    </>
+                ) : (
+                    <div className='calendar-page' >
+                        <div>
+                            <Button onClick={() => setLandingPage(true)}>Back</Button>
+                        </div>
+                        <Row className='photo-calendar-row'>
+                            <Col span={12} style={{ background: "pink", height: "97%", width: "97%", borderRadius: "20px" }}>
+                            </Col>
+                            <Col span={11} style={{ display: "flex", flexDirection: "column", margin: "0 auto", alignItems: "center", }} >
+
+                                <p className='calendar-text' >When can i take this beauty out?</p>
+                                <div style={wrapperStyle}>
+                                    <Calendar fullscreen={false} onPanelChange={onPanelChange} onSelect={onDateSelect} />
+                                </div>
+
+                                <Button style={{ width: "130px", marginTop: "10px", backgroundColor: "#f4788d", color: "white", borderRadius: "20px", border: "none" }} onClick={openModal}>
+                                    Save the date 💖
+                                </Button>
+                            </Col>
+                        </Row>
+
+                        <Modal
+                            title="Send Email"
+                            open={isModalOpen}
+                            onCancel={() => setIsModalOpen(false)}
+                            onOk={handleSendEmail}
+                            okText="Send Email 💌"
+                            okButtonProps={{
+                                style: {
+                                    backgroundColor: "#ff5a76",
+                                    borderColor: "#ff5a76",
+                                    color: "white",
+                                    padding: "6px 16px 8px",
+                                },
+                            }}
+                            cancelButtonProps={{
+                                style: {
+                                    backgroundColor: "white",
+                                    borderColor: "#ff5a76",
+                                    color: "#ff5a76",
+                                    padding: "6px 16px 8px",
+                                },
                             }}
                         >
-                            <p>When can I take this beauty out?</p>
+                            <label>Your Email:</label>
+                            <Input className='email-inputs' style={{ marginBottom: "10px" }}
+                                value={yourEmail}
+                                onChange={(e) => setYourEmail(e.target.value)}
+                            />
 
-                            <div style={wrapperStyle}>
-                                <Calendar
-                                    fullscreen={false}
-                                    onPanelChange={onPanelChange}
-                                    onSelect={onDateSelect}
-                                />
-                            </div>
+                            <label>Special Person's Email:</label>
+                            <Input className='email-inputs' style={{ marginBottom: "10px" }}
+                                value={specialEmail}
+                                onChange={(e) => setSpecialEmail(e.target.value)}
+                            />
+                            <p style={{ color: "#777", fontSize: "10px", marginTop: "8px" }}>
+                                This special invitation is sent with love by <b>Sai Javvadi</b> 💌
+                            </p>
 
-                            <Button style={{ marginTop: "10px" }} onClick={openModal}>
-                                Save the date 💖
-                            </Button>
-                        </Col>
-                    </Row>
-
-                    {/* Modal for entering recipient emails */}
-                    {/* <Modal
-                        title="Enter Recipient Emails"
-                        open={isModalOpen}
-                        onCancel={() => setIsModalOpen(false)}
-                        onOk={handleSendEmail}
-                        okText="Send Email 💌"
-                        modalRender={((modal) => (
-                            <div style={{ width: "500px" }} >
-                                {modal}
-                            </div>
-                        ))}
-                    >
-                        <Input
-                            type="text"
-                            placeholder="Enter emails separated by commas (e.g. you@example.com, love@example.com)"
-                            value={recipientEmails}
-                            onChange={(e) => setRecipientEmails(e.target.value)}
-                        />
-                        <p style={{ color: "#777", fontSize: "10px", marginTop: "8px" }}>
-                            This special invitation is sent with love by <b>Sai Javvadi</b> 💌
-                        </p>
-                    </Modal> */}
-
-                    <Modal
-                        title="Send Email"
-                        open={isModalOpen}
-                        onCancel={() => setIsModalOpen(false)}
-                        onOk={handleSendEmail}
-                        okText="Send Email 💌"
-                    >
-                        <label>Your Email:</label>
-                        <Input
-                            placeholder="Enter your email"
-                            value={yourEmail}
-                            onChange={(e) => setYourEmail(e.target.value)}
-                            style={{ marginBottom: "10px" }}
-                        />
-
-                        <label>Special Person's Email:</label>
-                        <Input
-                            placeholder="Enter their email"
-                            value={specialEmail}
-                            onChange={(e) => setSpecialEmail(e.target.value)}
-                            style={{ marginBottom: "10px" }}
-                        />
-                        <p style={{ color: "#777", fontSize: "10px", marginTop: "8px" }}>
-                            This special invitation is sent with love by <b>Sai Javvadi</b> 💌
-                        </p>
-
-                        {/* <label>Message:</label> */}
-                        {/* <textarea
+                            {/* <label>Message:</label> */}
+                            {/* <textarea
                             style={{ width: "100%", minHeight: "80px" }}
                             value={message}
                             onChange={(e) => setMessage(e.target.value)}
                         /> */}
-                    </Modal>
-                </>
-            )}
-        </div>
+                        </Modal>
+                    </div>
+                ))
+            }
+        </div >
     );
 };
 

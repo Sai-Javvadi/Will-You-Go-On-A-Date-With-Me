@@ -1,47 +1,212 @@
+@font-face {
+    font-family: 'HestinaFontbyKeithzo';
+    src: url('../fonts/HestinaFontbyKeithzo.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'Signatra';
+    src: url('../fonts/Signatra.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+
+
 .main-div {
+    width: 100vw;
+    height: 100vh;
+}
+
+
+.landing-page {
     width: 100%;
+    height: 100%;
+    background-image: url('..//images/landing-page-wallpaper.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top center;
+    /* background-position: center; */
+}
+
+
+.landing-page-text {
+    color: #ffcad4;
+    font-family: "HestinaFontbyKeithzo";
+    font-size: 1.6rem;
+    margin-bottom: 5px;
+    word-spacing: 2px;
+    letter-spacing: 2px;
+}
+
+.landing-page-btn {
+    border-radius: 50px;
+    height: 50px;
+    width: 50px;
+    background-color: #ffcad4;
+    border-color: #FF5A76;
+    color: #FF5A76;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button:focus {
+    outline: none;
+}
+
+svg {
+    fill: #FF5A76;
+}
+
+:where(.landing-page-btn:hover).ant-btn-variant-outlined:not(:disabled):not(.ant-btn-disabled):hover {
+    background-color: #ffcad4;
+    border-color: #FF5A76;
+}
+
+
+.his-her-name-row {
+    background: rgba(255, 202, 212, 0.22);
+    border-color: #ff5d8f;
+    width: 56%;
+    border-radius: 30px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgb(0, 0, 0, 0.01);
+    display: flex;
+    justify-content: space-around;
+}
+
+
+.his-her-name-input {
+    width: 150px;
+    height: 35px;
+    background: rgba(255, 202, 212, 0.22);
+    border-color: #ff5d8f;
+    color: #ffd7de;
+    font-weight: 600;
+    font-family: "HestinaFontbyKeithzo";
+    font-size: 1rem;
+    letter-spacing: 1px;
+}
+
+
+:where(.his-her-name-input, .email-inputs).ant-input-outlined:hover,
+.ant-input-outlined:focus {
+    background: rgba(255, 202, 212, 0.22);
+    border-color: #ff5d8f;
+}
+
+.ant-message .ant-message-notice-wrapper .ant-message-notice-content {
+    background: rgba(255, 202, 212, 0.22);
+    border-radius: 20px;
+    color: #ffcad4;
+    font-family: "Signatra";
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    padding: 9px 16px 7px 12px;
+    box-shadow: 0 4px 8px rgb(0, 0, 0, 0.01);
+
+}
+
+
+
+.date-asking-page {
+    background-image: url('..//images/common-wallpaper.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top center;
+    width: 100vw;
+    height: 99.9vh;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .text-div {
-    height: 400px;
+    background: rgba(255, 202, 212, 0.22);
     width: 30%;
+    height: 400px;
     min-width: 400px;
-    border-radius: 15px;
-    margin: -100px auto 0px;
-    background-color: red;
+    border-radius: 30px;
+    padding: 10px 20px 20px;
+    font-family: "Signatra";
+    font-size: 2rem;
+    letter-spacing: 1px;
 }
-
-
-
-
 
 button {
     border-radius: 20px;
     padding: 8px 30px;
-}
-
-.yes-btn {
-    background-color: green;
-    margin-left: -110px;
-    margin-top: 15px;
-}
-
-.no-btn {
-    position: absolute;
-    top: 68.88%;
-    left: 51%;
+    background-color: #FF5A76;
+    color: white;
 }
 
 button:hover {
-    border: 1px solid pink
+    border: 0px solid pink
+}
+
+.yes-btn {
+    background-color: #ff5a76;
+    color: white;
+    margin-top: 15px;
+    padding: 9px 20px 10px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    position: relative;
+}
+
+.no-btn {
+    background-color: #ff5a76;
+    color: white;
+    margin-top: 15px;
+    padding: 9px 20px 10px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+
+
+
+
+.calendar-page {
+    background-image: url('..//images/common-wallpaper.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top center;
+    width: 100vw;
+    height: 99.9vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.email-inputs {
+    background: rgba(255, 202, 212, 0.22);
+    border-color: #ff5d8f;
+    color: #ff5d8f;
+    font-weight: 600;
+    font-family: "HestinaFontbyKeithzo";
+    font-size: 1rem;
+    letter-spacing: 1px;
 }
 
 
 
 .photo-calendar-row {
-    background-color: red;
-    padding: 10px;
-    border-radius: 10px;
+    background: rgba(255, 202, 212, 0.22);
+    margin: 0 auto;
+    border-radius: 30px;
+    padding: 20px;
     width: 60vw;
     height: 500px;
     display: flex;
@@ -49,3 +214,283 @@ button:hover {
     align-items: center;
     gap: 10px;
 }
+
+
+.calendar-text {
+    color: #ffcad4;
+    font-family: "Signatra";
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    margin: 5px 0px;
+}
+
+
+.ant-picker-calendar .ant-picker-panel .ant-picker-body {
+    border-radius: 0px 0px 18px 18px;
+    background-color: #ffcad4;
+}
+
+:where(.css-dev-only-do-not-override-l9pxc0).ant-picker-calendar-mini {
+    border-radius: 19px;
+}
+
+.ant-picker-calendar-mini .ant-picker-calendar-header {
+    border-radius: 18px 18px 0px 0px;
+    background-color: #ffcad4;
+}
+
+
+
+.ant-picker-calendar-mini .ant-picker-panel {
+    border-radius: 0 0 24px 24px;
+}
+
+.ant-picker-calendar .ant-picker-cell-in-view.ant-picker-cell-selected:not(.ant-picker-cell-disabled) .ant-picker-cell-inner {
+    color: white;
+    background-color: #FF5A76;
+}
+
+
+.ant-picker-calendar .ant-picker-cell-in-view.ant-picker-cell-today .ant-picker-cell-inner::before {
+    /* background-color: #FF5A76; */
+    border: 0px solid #ffcad4;
+    color: white;
+}
+
+.ant-select-outlined:not(.ant-select-customize-input) .ant-select-selector {
+    color: white;
+    background-color: #FF5A76;
+    border: 0px solid #ffcad4;
+
+}
+
+
+.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
+    z-index: 1;
+    color: white;
+    background: #ff5a76;
+    border: 0px solid #ffcad4;
+}
+
+
+
+
+
+
+.ant-radio-button-wrapper {
+    color: white;
+    font-size: 14px;
+    line-height: 30px;
+    background: #ff5a76;
+    border: 0px solid #ffcad4;
+}
+
+
+
+
+
+.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled)::before {
+    background-color: white;
+}
+
+
+
+.ant-radio-button-wrapper:hover {
+    color: white;
+}
+
+.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):active {
+    color: white;
+}
+
+
+
+.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):active::before {
+    background-color: white;
+}
+
+
+
+
+.ant-select-single.ant-select-sm.ant-select-open .ant-select-selection-item {
+    color: white
+}
+
+
+
+
+.ant-modal .ant-modal-content {
+    position: relative;
+    background-color: #ffcad4;
+    color: #FF5A76;
+    background-clip: padding-box;
+    border: 0;
+    border-radius: 8px;
+    box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+    pointer-events: auto;
+    padding: 20px 24px;
+}
+
+
+:where(.css-dev-only-do-not-override-l9pxc0).ant-modal .ant-modal-header {
+    color: rgba(0, 0, 0, 0.88);
+    background: inherit;
+    border-radius: 8px 8px 0 0;
+    margin-bottom: 8px;
+    padding: 0;
+    border-bottom: none;
+}
+
+
+.ant-modal .ant-modal-title {
+    margin: 0;
+    color: rgba(0, 0, 0, 0.88);
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 1.5;
+    word-wrap: break-word;
+}
+
+
+:where(.css-dev-only-do-not-override-l9pxc0).ant-btn-variant-solid {
+    color: #fff;
+    background: #ff5a76;
+    border-radius: 20px;
+    padding: 8px 30px;
+}
+
+.ant-btn-variant-solid:not(:disabled):not(.ant-btn-disabled):hover {
+    background: #ff5a76;
+    color: #fff;
+    border-radius: 20px;
+    padding: 8px 30px;
+}
+
+.ant-btn-variant-outlined {
+    border-radius: 20px;
+    padding: 8px 30px;
+    color: #FF5A76;
+}
+
+
+.ant-picker-calendar .ant-select-arrow svg {
+    fill: white;
+    width: 14px;
+    height: 14px;
+}
+
+.ant-picker-calendar .ant-select-arrow svg {
+    transition: transform 0.3s;
+}
+
+.ant-picker-calendar .ant-select-open .ant-select-arrow svg {
+    transform: rotate(180deg);
+}
+
+
+
+
+.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover {
+    color: white;
+    border-color: white;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* linear-gradient(135deg, #FFC1CC, #CBA6F7) → romantic soft sky.
+
+linear-gradient(180deg, #FFD9A0, #FFC1CC) → sunset vibe.
+
+linear-gradient(120deg, #A3D5FF, #CBA6F7, #FFC1CC) → whimsical magical feel. */
