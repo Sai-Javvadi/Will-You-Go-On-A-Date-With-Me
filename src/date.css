@@ -143,14 +143,14 @@ svg {
 
 button {
     border-radius: 20px;
-    padding: 8px 30px;
+    padding: 8px 30px 10px;
     background-color: #FF5A76;
     color: white;
 }
 
-button:hover {
+/* button:hover {
     border: 0px solid pink
-}
+} */
 
 .yes-btn {
     background-color: #ff5a76;
@@ -207,7 +207,7 @@ button:hover {
     margin: 0 auto;
     border-radius: 30px;
     padding: 20px;
-    width: 60vw;
+    width: 69vw;
     height: 500px;
     display: flex;
     justify-content: center;
@@ -450,12 +450,26 @@ button:hover {
 
 
 
+:where(.do-you-really-love-me-modal).ant-modal .ant-modal-footer {
+    text-align: end;
+    background: transparent;
+    margin-top: 20px;
+    padding: 0;
+    border-top: none;
+    border-radius: 0;
+}
 
 
 
 
-
-
+.ant-modal .ant-modal-title {
+    margin: 0;
+    color: #FF5A76;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 1.5;
+    word-wrap: break-word;
+}
 
 
 

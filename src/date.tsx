@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
 import './date.css';
+import { useState } from 'react';
+import emailjs from 'emailjs-com';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 import dayLocaleData from 'dayjs/plugin/localeData';
-import emailjs from 'emailjs-com';
-import type { CalendarProps } from 'antd';
 import { Button, Col, Row, Calendar, Modal, Input, message } from 'antd';
+import type { CalendarProps } from 'antd';
 
 const DateGame = () => {
     const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
@@ -19,10 +19,11 @@ const DateGame = () => {
     const [dateAskingPage, setDateAskingPage] = useState<boolean>(true)
     const [herName, setHerName] = useState<string>("")
     const [hisName, setHisName] = useState<string>("")
+    const [messageApi, contextHolder] = message.useMessage();
 
+    dayjs.extend(dayLocaleData);
 
     const images = Array.from({ length: 9 }, (_, i) => `/images/cupid-images/image-${i + 1}.png`);
-
     const handleImageChange = (timesHovered: number) => {
         if (timesHovered >= 20) return "someimage";
 
@@ -30,10 +31,6 @@ const DateGame = () => {
         return images[index] || images[0];
     };
 
-
-    dayjs.extend(dayLocaleData);
-
-    const [messageApi, contextHolder] = message.useMessage();
 
     const onPanelChange = (value: Dayjs, mode: CalendarProps<Dayjs>['mode']) => {
         console.log(value.format('DD-MM-YYYY'), mode);
@@ -44,41 +41,20 @@ const DateGame = () => {
         console.log("Date selected:", value.format("DD-MM-YYYY"));
     };
 
-    // const moveBtn = () => {
-    //     const noBtn = document.getElementsByClassName("no-btn")[0] as HTMLElement;
-    //     if (!noBtn) return;
-
-    //     const maxX = window.innerWidth - noBtn.offsetWidth;
-    //     const maxY = window.innerHeight - noBtn.offsetHeight;
-
-    //     const randomX = Math.random() * maxX;
-    //     const randomY = Math.random() * maxY;
-
-    //     noBtn.style.position = "absolute";
-    //     noBtn.style.left = randomX + "px";
-    //     noBtn.style.top = randomY + "px";
-    // };
-
     const moveBtn = () => {
         const noBtn = document.getElementsByClassName("no-btn")[0] as HTMLElement;
         if (!noBtn) return;
 
-        const btnWidth = noBtn.offsetWidth;
-        const btnHeight = noBtn.offsetHeight;
-
-        // Keep inside viewport
-        const maxX = window.innerWidth - btnWidth - 20; // add small margin
-        const maxY = window.innerHeight - btnHeight - 20;
+        const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+        const maxY = window.innerHeight - noBtn.offsetHeight - 20;
 
         const randomX = Math.random() * maxX;
         const randomY = Math.random() * maxY;
 
-        noBtn.style.position = "fixed"; // fixed to viewport (not inside grid)
+        noBtn.style.position = "fixed";
         noBtn.style.left = randomX + "px";
         noBtn.style.top = randomY + "px";
     };
-
-
 
     const countHover = () => {
         setTimesHovered(prev => {
@@ -88,15 +64,6 @@ const DateGame = () => {
         });
         console.log(timesHovered);
     }
-
-    const handleNoLoveBtn = () => {
-        alert("I hate you Biyach...........")
-    }
-
-    const handleYesLoveBtn = () => {
-        alert("Yes is clicked")
-    }
-
 
     const openModal = () => {
         if (!selectedDate) {
@@ -141,11 +108,6 @@ const DateGame = () => {
         });
     };
 
-    const wrapperStyle: React.CSSProperties = {
-        width: 300,
-        borderRadius: "20px",
-    };
-
     const handleLandingPage = () => {
         if (hisName.trim() === "" || herName.trim() === "") {
             messageApi.open({
@@ -162,9 +124,29 @@ const DateGame = () => {
         setDateAskingPage(true);
     };
 
+    const handle20TimesModalCancel = () => {
+        const currentHerName = herName;
+        const currentHisName = hisName;
+
+        setOpen20TimesModal(false);
+        setTimesHovered(0);
+        setLandingPage(false);
+        setHerName("");
+        setHisName("");
+
+        messageApi.open({
+            type: "error",
+            content: `${currentHerName} doesn't want to go on a date with ${currentHisName}`,
+            icon: <span style={{ fontSize: "18px" }}>💔</span>,
+            style: { marginTop: "5vh" },
+        });
+    };
+
 
     return (
         <div className='main-div'>
+            {contextHolder}
+
             {landingPage ? (
                 <div className='landing-page' >
                     <Row style={{ display: "flex", justifyContent: "space-around", alignItems: "center", paddingTop: "61vh", }} >
@@ -189,7 +171,6 @@ const DateGame = () => {
                             </Col>
                         </Row>
                     </Row>
-                    {contextHolder}
                 </div>
             ) : (
                 dateAskingPage ? (
@@ -206,23 +187,36 @@ const DateGame = () => {
 
                             <Row gutter={[16, 16]} >
                                 <Col span={12} >
-                                    <button className='yes-btn' onClick={() => { setDateAskingPage(false); }} > Yes </button>
+                                    <button className='yes-btn' onClick={() => { setDateAskingPage(false) }} > Yes </button>
                                 </Col>
                                 <Col span={12} >
                                     <button className='no-btn' onMouseOver={() => { moveBtn(); countHover(); }}> No </button>
                                 </Col>
                             </Row>
 
+                            <Modal
+                                footer={null}
+                                open={open20TimesModal}
+                                onCancel={() => [setOpen20TimesModal(false), setTimesHovered(0)]}
+                                className='do-you-really-love-me-modal'
+                                title="Important Love Survey 💌"
+                            >
+                                <h2>Do you wanna go out with me ?</h2>
+                                <div style={{ display: "flex", justifyContent: "end", gap: "10px", marginTop: "20px" }}>
+                                    <Button
+                                        onClick={handle20TimesModalCancel}
+                                        style={{ backgroundColor: "white", borderColor: "#ff5a76", color: "#ff5a76", padding: "6px 16px 8px" }}
+                                    >
+                                        Hmm... No..!
+                                    </Button>
 
-                            <Modal open={open20TimesModal} onCancel={() => setOpen20TimesModal(false)} >
-                                <p> Do you really love Me </p>
-                                <Button onClick={handleYesLoveBtn} >
-                                    Haha! I was just playing with the NO button.
-                                </Button>
-
-                                <Button onClick={handleNoLoveBtn} >
-                                    No
-                                </Button>
+                                    <Button
+                                        onClick={() => { setDateAskingPage(false); setOpen20TimesModal(false); }}
+                                        style={{ backgroundColor: "#ff5a76", borderColor: "#ff5a76", color: "white", padding: "6px 16px 8px" }}
+                                    >
+                                        Of course, I do! 😍
+                                    </Button>
+                                </div>
                             </Modal>
                         </div >
                     </>
@@ -232,12 +226,13 @@ const DateGame = () => {
                             <Button onClick={() => setLandingPage(true)}>Back</Button>
                         </div>
                         <Row className='photo-calendar-row'>
-                            <Col span={12} style={{ background: "pink", height: "97%", width: "97%", borderRadius: "20px" }}>
+                            <Col span={15} style={{ background: "pink", height: "97%", width: "97%", borderRadius: "20px" }}>
+                            <img src='/images/calendar-date-image.png' alt='calendar-date-image' style={{ width: "100%", height: "100%", borderRadius: "20px" }} />
                             </Col>
-                            <Col span={11} style={{ display: "flex", flexDirection: "column", margin: "0 auto", alignItems: "center", }} >
+                            <Col span={5} style={{ display: "flex", flexDirection: "column", margin: "0 auto", alignItems: "center", }} >
 
                                 <p className='calendar-text' >When can i take this beauty out?</p>
-                                <div style={wrapperStyle}>
+                                <div style={{ width: 300, borderRadius: "20px", }}>
                                     <Calendar fullscreen={false} onPanelChange={onPanelChange} onSelect={onDateSelect} />
                                 </div>
 
@@ -281,7 +276,7 @@ const DateGame = () => {
                                 value={specialEmail}
                                 onChange={(e) => setSpecialEmail(e.target.value)}
                             />
-                            <p style={{ color: "#777", fontSize: "10px", marginTop: "8px" }}>
+                            <p style={{ color: "#FF5A76", fontSize: "10px", marginTop: "8px" }}>
                                 This special invitation is sent with love by <b>Sai Javvadi</b> 💌
                             </p>
 
@@ -295,7 +290,7 @@ const DateGame = () => {
                     </div>
                 ))
             }
-        </div >
+        </div>
     );
 };
 
