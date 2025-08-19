@@ -16,7 +16,7 @@ const DateGame = () => {
     const [timesHovered, setTimesHovered] = useState<number>(0)
     const [open20TimesModal, setOpen20TimesModal] = useState<boolean>(false)
     const [landingPage, setLandingPage] = useState<boolean>(true)
-    const [dateAskingPage, setDateAskingPage] = useState<boolean>(true)
+    const [dateAskingPage, setDateAskingPage] = useState<boolean>(false)
     const [herName, setHerName] = useState<string>("")
     const [hisName, setHisName] = useState<string>("")
     const [messageApi, contextHolder] = message.useMessage();
@@ -142,6 +142,13 @@ const DateGame = () => {
         });
     };
 
+    const scaleYesBtn = (timesHovered: number) => {
+        const yesBtn = document.getElementsByClassName("yes-btn")[0] as HTMLElement;
+        if (!yesBtn) return `scale(1)`;
+        const scale = 1 + (timesHovered / 20);
+        yesBtn.style.transform = `scale(${scale})`;
+    }
+
 
     return (
         <div className='main-div'>
@@ -177,7 +184,9 @@ const DateGame = () => {
                     <>
                         <div className='date-asking-page'  >
                             <div className='text-div'>
-                                <p style={{ margin: "10px" }} > <span style={{ fontFamily: "HestinaFontbyKeithzo", fontSize: "1.5rem" }} >  {herName.charAt(0).toUpperCase() + herName.slice(1).toLowerCase()} </span> will you go on a date with me ? </p>
+                                <p style={{ margin: "10px", color: "#ffcad4" }} >
+                                    <span style={{ fontFamily: "HestinaFontbyKeithzo", fontSize: "1.5rem" }}> {herName.charAt(0).toUpperCase() + herName.slice(1).toLowerCase()} </span>
+                                    will you go on a date with me ? </p>
                                 <div style={{ width: "69%", background: "red", height: "80%", display: "flex", margin: "0 auto", borderRadius: "15px" }} >
                                     <img src={handleImageChange(timesHovered)} alt='cupid-image' style={{ borderRadius: "15px" }} />
                                 </div>
@@ -187,10 +196,14 @@ const DateGame = () => {
 
                             <Row gutter={[16, 16]} >
                                 <Col span={12} >
-                                    <button className='yes-btn' onClick={() => { setDateAskingPage(false) }} > Yes </button>
+                                    <Button className='yes-btn' onClick={() => { setDateAskingPage(false); }}
+                                        style={{ transform: `scale(${1 + timesHovered / 20})`, transition: "transform 0.2s ease" }}
+                                    >
+                                        Yes
+                                    </Button>
                                 </Col>
                                 <Col span={12} >
-                                    <button className='no-btn' onMouseOver={() => { moveBtn(); countHover(); }}> No </button>
+                                    <Button className='no-btn' onMouseOver={() => { moveBtn(); countHover(); }}> No </Button>
                                 </Col>
                             </Row>
 
@@ -205,14 +218,14 @@ const DateGame = () => {
                                 <div style={{ display: "flex", justifyContent: "end", gap: "10px", marginTop: "20px" }}>
                                     <Button
                                         onClick={handle20TimesModalCancel}
-                                        style={{ backgroundColor: "white", borderColor: "#ff5a76", color: "#ff5a76", padding: "6px 16px 8px" }}
+                                        style={{ backgroundColor: "white", borderColor: "#ff5a76", color: "#ff5a76", padding: "6px 16px 3px", borderRadius: "20px", }}
                                     >
                                         Hmm... No..!
                                     </Button>
 
                                     <Button
                                         onClick={() => { setDateAskingPage(false); setOpen20TimesModal(false); }}
-                                        style={{ backgroundColor: "#ff5a76", borderColor: "#ff5a76", color: "white", padding: "6px 16px 8px" }}
+                                        style={{ backgroundColor: "#ff5a76", borderColor: "#ff5a76", color: "white", padding: "6px 16px 8px", borderRadius: "20px", }}
                                     >
                                         Of course, I do! 😍
                                     </Button>
@@ -227,7 +240,7 @@ const DateGame = () => {
                         </div>
                         <Row className='photo-calendar-row'>
                             <Col span={15} style={{ background: "pink", height: "97%", width: "97%", borderRadius: "20px" }}>
-                            <img src='/images/calendar-date-image.png' alt='calendar-date-image' style={{ width: "100%", height: "100%", borderRadius: "20px" }} />
+                                <img src='/images/calendar-date-image.png' alt='calendar-date-image' style={{ width: "100%", height: "100%", borderRadius: "20px" }} />
                             </Col>
                             <Col span={5} style={{ display: "flex", flexDirection: "column", margin: "0 auto", alignItems: "center", }} >
 
@@ -236,7 +249,7 @@ const DateGame = () => {
                                     <Calendar fullscreen={false} onPanelChange={onPanelChange} onSelect={onDateSelect} />
                                 </div>
 
-                                <Button style={{ width: "130px", marginTop: "10px", backgroundColor: "#f4788d", color: "white", borderRadius: "20px", border: "none" }} onClick={openModal}>
+                                <Button style={{ width: "160px", padding: "9px 10px 12px 21px", marginTop: "10px", backgroundColor: "#f4788d", color: "white", borderRadius: "20px", border: "none" }} onClick={openModal}>
                                     Save the date 💖
                                 </Button>
                             </Col>
@@ -253,7 +266,10 @@ const DateGame = () => {
                                     backgroundColor: "#ff5a76",
                                     borderColor: "#ff5a76",
                                     color: "white",
-                                    padding: "6px 16px 8px",
+                                    padding: "6px 11px 8px 16px",
+                                    fontFamily: "Signatra",
+                                    fontSize: "1.5rem",
+                                    marginTop: "-1px"
                                 },
                             }}
                             cancelButtonProps={{
@@ -261,9 +277,16 @@ const DateGame = () => {
                                     backgroundColor: "white",
                                     borderColor: "#ff5a76",
                                     color: "#ff5a76",
-                                    padding: "6px 16px 8px",
+                                    padding: "8px 16px 7px",
+                                    borderRadius: "20px",
+                                    marginTop: "1px"
                                 },
                             }}
+                            modalRender={(modal) => (
+                                <div style={{ borderRadius: "20px" }}>
+                                    {modal}
+                                </div>
+                            )}
                         >
                             <label>Your Email:</label>
                             <Input className='email-inputs' style={{ marginBottom: "10px" }}
@@ -290,7 +313,7 @@ const DateGame = () => {
                     </div>
                 ))
             }
-        </div>
+        </div >
     );
 };
 

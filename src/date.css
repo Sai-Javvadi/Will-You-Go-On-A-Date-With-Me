@@ -141,22 +141,11 @@ svg {
     letter-spacing: 1px;
 }
 
-button {
-    border-radius: 20px;
-    padding: 8px 30px 10px;
-    background-color: #FF5A76;
-    color: white;
-}
-
-/* button:hover {
-    border: 0px solid pink
-} */
-
 .yes-btn {
     background-color: #ff5a76;
     color: white;
     margin-top: 15px;
-    padding: 9px 20px 10px;
+    padding: 11px 30px 13px;
     border: none;
     border-radius: 20px;
     cursor: pointer;
@@ -167,12 +156,33 @@ button {
     background-color: #ff5a76;
     color: white;
     margin-top: 15px;
-    padding: 9px 20px 10px;
+    padding: 13px 30px 11px;
     border: none;
     border-radius: 20px;
     cursor: pointer;
 }
 
+
+:where(.yes-btn).ant-btn-variant-outlined:not(:disabled):not(.ant-btn-disabled):hover {
+    background-color: #ff5a76;
+    color: white;
+    margin-top: 15px;
+    padding: 11px 30px 13px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    position: relative;
+}
+
+:where(.no-btn).ant-btn-variant-outlined:not(:disabled):not(.ant-btn-disabled):hover {
+    background-color: #ff5a76;
+    color: white;
+    margin-top: 15px;
+    padding: 13px 30px 11px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
 
 
 
@@ -217,6 +227,7 @@ button {
 
 
 .calendar-text {
+    width: 130%;
     color: #ffcad4;
     font-family: "Signatra";
     font-size: 1.5rem;
@@ -272,8 +283,12 @@ button {
     border: 0px solid #ffcad4;
 }
 
+.ant-btn-variant-outlined {
 
-
+    font-family: "Signatra";
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+}
 
 
 
@@ -325,7 +340,7 @@ button {
     color: #FF5A76;
     background-clip: padding-box;
     border: 0;
-    border-radius: 8px;
+    border-radius: 25px;
     box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
     pointer-events: auto;
     padding: 20px 24px;
@@ -342,15 +357,6 @@ button {
 }
 
 
-.ant-modal .ant-modal-title {
-    margin: 0;
-    color: rgba(0, 0, 0, 0.88);
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 1.5;
-    word-wrap: break-word;
-}
-
 
 :where(.css-dev-only-do-not-override-l9pxc0).ant-btn-variant-solid {
     color: #fff;
@@ -365,13 +371,6 @@ button {
     border-radius: 20px;
     padding: 8px 30px;
 }
-
-.ant-btn-variant-outlined {
-    border-radius: 20px;
-    padding: 8px 30px;
-    color: #FF5A76;
-}
-
 
 .ant-picker-calendar .ant-select-arrow svg {
     fill: white;
@@ -464,6 +463,7 @@ button {
 
 .ant-modal .ant-modal-title {
     margin: 0;
+    background-color: #ffcad4;
     color: #FF5A76;
     font-weight: 600;
     font-size: 16px;
