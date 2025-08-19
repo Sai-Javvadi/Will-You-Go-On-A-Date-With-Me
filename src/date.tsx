@@ -10,7 +10,6 @@ import type { CalendarProps } from 'antd';
 const DateGame = () => {
     const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-    const [recipientEmails, setRecipientEmails] = useState<string>("");
     const [yourEmail, setYourEmail] = useState<string>("");
     const [specialEmail, setSpecialEmail] = useState<string>("")
     const [timesHovered, setTimesHovered] = useState<number>(0)
@@ -79,33 +78,46 @@ const DateGame = () => {
             return;
         }
 
-        setLandingPage(true)
+        const selectedDateStr = selectedDate?.format("DD-MM-YYYY");
 
-        const toEmails = [yourEmail, specialEmail].join(", ");
+        const recipients = [
+            { email: yourEmail, name: herName },
+            { email: specialEmail, name: hisName }
+        ];
 
-        const templateParams = {
-            date: selectedDate?.format("DD-MM-YYYY"),
-            to_email: toEmails,
-            // message: message,
-            from_name: "Your Special One",
-        };
+        recipients.forEach((recipient) => {
+            const templateParams = {
+                date: selectedDateStr,
+                to_email: recipient.email,
+                recipientName: recipient.name,
+            };
 
-        emailjs.send(
-            "service_will-u-g-t-d-w-m",   // EmailJS service ID
-            "template_date_temp",         // EmailJS template ID
-            // {
-            //     date: selectedDate?.format("DD-MM-YYYY"),
-            //     to_email: recipientEmails, // multiple emails, comma-separated
-            // },
-            templateParams,
-            "6G8dbqk7TIjwFrSX8"            // EmailJS public key
-        ).then(() => {
-            alert("💌 Email sent successfully to: " + recipientEmails);
-            setIsModalOpen(false);
-            setRecipientEmails("");
-        }).catch((err) => {
-            alert("Failed to send email: " + err.text);
+            emailjs.send(
+                "service_will-u-g-t-d-w-m",   // Service ID
+                "template_date_temp",         // Template ID
+                templateParams,
+                "6G8dbqk7TIjwFrSX8"           // Public key
+            ).then(() => {
+                console.log(`💌 Email sent successfully to ${recipient.email}`);
+            }).catch((err) => {
+                console.error("Failed to send email:", err.text);
+            });
         });
+
+        messageApi.open({
+            type: "error",
+            content: "Emails sent successfully!",
+            icon: <span style={{ fontSize: "18px" }}>💌</span>,
+            style: { marginTop: "5vh" },
+            // duration:100
+        });
+        setIsModalOpen(false);
+        setTimesHovered(0);
+        setLandingPage(true);
+        setHerName("");
+        setHisName("");
+        setYourEmail("");
+        setSpecialEmail("");
     };
 
     const handleLandingPage = () => {
@@ -130,7 +142,7 @@ const DateGame = () => {
 
         setOpen20TimesModal(false);
         setTimesHovered(0);
-        setLandingPage(false);
+        setLandingPage(true);
         setHerName("");
         setHisName("");
 
@@ -141,14 +153,6 @@ const DateGame = () => {
             style: { marginTop: "5vh" },
         });
     };
-
-    const scaleYesBtn = (timesHovered: number) => {
-        const yesBtn = document.getElementsByClassName("yes-btn")[0] as HTMLElement;
-        if (!yesBtn) return `scale(1)`;
-        const scale = 1 + (timesHovered / 20);
-        yesBtn.style.transform = `scale(${scale})`;
-    }
-
 
     return (
         <div className='main-div'>
