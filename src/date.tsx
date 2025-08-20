@@ -109,6 +109,7 @@ const DateGame = () => {
             content: "Emails sent successfully!",
             icon: <span style={{ fontSize: "18px" }}>💌</span>,
             style: { marginTop: "5vh" },
+            className: "alert-message",
             // duration:100
         });
         setIsModalOpen(false);
@@ -127,7 +128,8 @@ const DateGame = () => {
                 content: "The dreamers names can't be empty",
                 icon: <span style={{ fontSize: "18px" }}>💔</span>,
                 style: { marginTop: "5vh" },
-                // duration:100
+                className: "alert-message",
+                // duration: 100
             });
             return;
         }
@@ -151,6 +153,7 @@ const DateGame = () => {
             content: `${currentHerName} doesn't want to go on a date with ${currentHisName}`,
             icon: <span style={{ fontSize: "18px" }}>💔</span>,
             style: { marginTop: "5vh" },
+            className: "alert-message",
         });
     };
 
@@ -160,22 +163,22 @@ const DateGame = () => {
 
             {landingPage ? (
                 <div className='landing-page' >
-                    <Row style={{ display: "flex", justifyContent: "space-around", alignItems: "center", paddingTop: "61vh", }} >
+                    <Row className="his-her-name-row-container">
                         <Row className='his-her-name-row'>
-                            <Col span={21} style={{ display: "flex", flexDirection: "column", alignItems: "start" }} >
-                                <p className='landing-page-text' style={{ marginTop: "-1vh", textAlign: "center" }} > Two names… two souls… one story waiting to unfold.</p>
-                                <div style={{ display: "flex" }} >
-                                    <p className='landing-page-text' style={{ marginTop: "0px", marginRight: "7px" }} >  What's your name, dear traveler?</p>
+                            <Col sm={24} md={24} lg={22} xl={21} xxl={21} className='' style={{ display: "flex", flexDirection: "column", alignItems: "start" }} >
+                                <p className='landing-page-text' style={{ marginTop: "-1vh", textAlign: "center" }} > Your names are the whispers that destiny has been waiting for.</p>
+                                <div className='names-input-div'>
+                                    <p className='landing-page-text' > Whisper your name, beloved traveler of the heart.</p>
                                     <Input value={herName} onChange={(e) => setHerName(e.target.value)} className='his-her-name-input' />
                                 </div>
-                                <div style={{ display: "flex" }}  >
-                                    <p className='landing-page-text' style={{ marginTop: "0px", marginRight: "7px" }} >And the name of the one who lights your soul? </p>
+                                <div className='names-input-div'>
+                                    <p className='landing-page-text' >And Who holds the key to your heart's secret garden? </p>
                                     <Input value={hisName} onChange={(e) => setHisName(e.target.value)} className='his-her-name-input' />
                                 </div>
                             </Col>
-                            <Col span={2} style={{ display: "flex", alignItems: "center", justifyContent: "center", marginLeft: "10px" }} >
+                            <Col sm={24} md={24} lg={2} xl={2} xxl={2} className='landing-enter-btn'  >
                                 <div onClick={handleLandingPage} className='landing-page-btn' >
-                                    <svg className='landing-svg' viewBox="0 0 512 512" style={{ height: "24px", width: "24px", marginLeft: "2px", }}>
+                                    <svg className='landing-svg' viewBox="0 0 512 512" style={{ height: "20px", width: "20px", marginLeft: "2px", }}>
                                         <path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"> </path>
                                     </svg>
                                 </div>
@@ -188,11 +191,11 @@ const DateGame = () => {
                     <>
                         <div className='date-asking-page'  >
                             <div className='text-div'>
-                                <p style={{ margin: "10px", color: "#ffcad4" }} >
-                                    <span style={{ fontFamily: "HestinaFontbyKeithzo", fontSize: "1.5rem" }}> {herName.charAt(0).toUpperCase() + herName.slice(1).toLowerCase()} </span>
+                                <p className='will-you-go-on-a-date-with-me-text'  >
+                                    <span className='her-name-span' > {herName.charAt(0).toUpperCase() + herName.slice(1).toLowerCase()} </span>
                                     will you go on a date with me ? </p>
-                                <div style={{ width: "69%", background: "red", height: "80%", display: "flex", margin: "0 auto", borderRadius: "15px" }} >
-                                    <img src={handleImageChange(timesHovered)} alt='cupid-image' style={{ borderRadius: "15px" }} />
+                                <div className='cupid-images-div' >
+                                    <img className='cupid-images' src={handleImageChange(timesHovered)} alt='cupid-image' />
                                 </div>
                             </div>
 
@@ -216,20 +219,16 @@ const DateGame = () => {
                                 open={open20TimesModal}
                                 onCancel={() => [setOpen20TimesModal(false), setTimesHovered(0)]}
                                 className='do-you-really-love-me-modal'
-                                title="Important Love Survey 💌"
+                                title="Important Survey 💌"
                             >
-                                <h2>Do you wanna go out with me ?</h2>
+                                <h2 className='do-you-wanna-go-out-with-me-text' >Do you wanna go out with me ?</h2>
                                 <div style={{ display: "flex", justifyContent: "end", gap: "10px", marginTop: "20px" }}>
-                                    <Button
-                                        onClick={handle20TimesModalCancel}
-                                        style={{ backgroundColor: "white", borderColor: "#ff5a76", color: "#ff5a76", padding: "6px 16px 3px", borderRadius: "20px", }}
-                                    >
+                                    <Button className='date-ask-modal-no-btn' onClick={handle20TimesModalCancel}  >
                                         Hmm... No..!
                                     </Button>
 
-                                    <Button
+                                    <Button className='date-ask-modal-yes-btn'
                                         onClick={() => { setDateAskingPage(false); setOpen20TimesModal(false); }}
-                                        style={{ backgroundColor: "#ff5a76", borderColor: "#ff5a76", color: "white", padding: "6px 16px 8px", borderRadius: "20px", }}
                                     >
                                         Of course, I do! 😍
                                     </Button>
@@ -240,20 +239,33 @@ const DateGame = () => {
                 ) : (
                     <div className='calendar-page' >
                         <div>
-                            <Button onClick={() => setLandingPage(true)}>Back</Button>
+                            {/* <Button onClick={() => setLandingPage(true)}>Back</Button> */}
                         </div>
                         <Row className='photo-calendar-row'>
-                            <Col span={15} style={{ background: "pink", height: "97%", width: "97%", borderRadius: "20px" }}>
-                                <img src='/images/calendar-date-image.png' alt='calendar-date-image' style={{ width: "100%", height: "100%", borderRadius: "20px" }} />
+                            <Col sm={24} md={24} lg={18} xl={15} xxl={15} >
+                                <img className='calendar-date-image' src='/images/calendar-date-image.png' alt='calendar-date-image' />
                             </Col>
-                            <Col span={5} style={{ display: "flex", flexDirection: "column", margin: "0 auto", alignItems: "center", }} >
+                            <Col sm={24} md={24} lg={8} xl={5} xxl={5} style={{ display: "flex", flexDirection: "column", margin: "0 auto", alignItems: "center", }} >
 
                                 <p className='calendar-text' >When can i take this beauty out?</p>
                                 <div style={{ width: 300, borderRadius: "20px", }}>
-                                    <Calendar fullscreen={false} onPanelChange={onPanelChange} onSelect={onDateSelect} />
+                                    <Calendar className='date-calendar' fullscreen={false} onPanelChange={onPanelChange} onSelect={onDateSelect} />
                                 </div>
 
-                                <Button style={{ width: "160px", padding: "9px 10px 12px 21px", marginTop: "10px", backgroundColor: "#f4788d", color: "white", borderRadius: "20px", border: "none" }} onClick={openModal}>
+                                <Button className='calendar-page-btn' onClick={() => {
+                                    if (!selectedDate) {
+                                        messageApi.open({
+                                            type: "error",
+                                            content: "The stars can’t align until you choose a day!",
+                                            icon: <span style={{ fontSize: "18px" }}>✨</span>,
+                                            style: { marginTop: "5vh" },
+                                            className: "calendar-page-btn-alert-message",
+                                            duration: 100
+                                        });
+                                        return;
+                                    }
+                                    openModal();
+                                }}>
                                     Save the date 💖
                                 </Button>
                             </Col>
