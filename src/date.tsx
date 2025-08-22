@@ -1,5 +1,5 @@
 import './date.css';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import emailjs from 'emailjs-com';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
@@ -29,6 +29,14 @@ const DateGame = () => {
         const index = Math.floor(timesHovered / 2);
         return images[index] || images[0];
     };
+
+    const inputFocus = useRef(null)
+
+    useEffect(() => {
+        if (inputFocus.current) {
+            (inputFocus.current as HTMLInputElement).focus();
+        }
+    }, [landingPage]);
 
 
     const onPanelChange = (value: Dayjs, mode: CalendarProps<Dayjs>['mode']) => {
@@ -171,7 +179,7 @@ const DateGame = () => {
                                 <p className='landing-page-text' style={{ marginTop: "-1vh", textAlign: "center" }} > Your names are the whispers that destiny has been waiting for.</p>
                                 <div className='names-input-div'>
                                     <p className='landing-page-text' > Whisper your name, beloved traveler of the heart.</p>
-                                    <Input value={herName} onChange={(e) => setHerName(e.target.value)} className='his-her-name-input' />
+                                    <Input ref={inputFocus} value={herName} onChange={(e) => setHerName(e.target.value)} className='his-her-name-input' />
                                 </div>
                                 <div className='names-input-div'>
                                     <p className='landing-page-text' >And Who holds the key to your heart's secret garden? </p>
