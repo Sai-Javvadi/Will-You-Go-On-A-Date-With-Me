@@ -53,6 +53,8 @@ const DateGame = () => {
         noBtn.style.position = "fixed";
         noBtn.style.left = randomX + "px";
         noBtn.style.top = randomY + "px";
+
+        noBtn.blur();
     };
 
     const countHover = () => {
@@ -210,7 +212,7 @@ const DateGame = () => {
                                     </Button>
                                 </Col>
                                 <Col span={12} >
-                                    <Button className='no-btn' onMouseOver={() => { moveBtn(); countHover(); }}> No </Button>
+                                    <Button className='no-btn' onMouseOver={() => { moveBtn(); countHover(); }} onTouchStart={() => { moveBtn(); countHover(); }} > No </Button>
                                 </Col>
                             </Row>
 
