@@ -14,7 +14,7 @@ const DateGame = () => {
     const [specialEmail, setSpecialEmail] = useState<string>("")
     const [timesHovered, setTimesHovered] = useState<number>(0)
     const [open20TimesModal, setOpen20TimesModal] = useState<boolean>(false)
-    const [landingPage, setLandingPage] = useState<boolean>(true)
+    const [landingPage, setLandingPage] = useState<boolean>(false)
     const [dateAskingPage, setDateAskingPage] = useState<boolean>(false)
     const [herName, setHerName] = useState<string>("")
     const [hisName, setHisName] = useState<string>("")
@@ -76,10 +76,29 @@ const DateGame = () => {
 
     const openModal = () => {
         if (!selectedDate) {
-            alert("Please select a date first!");
+            messageApi.open({
+                type: "error",
+                content: "Please select a date first! 🌙",
+                icon: <span style={{ fontSize: "18px" }}>✨</span>,
+                style: { marginTop: "5vh" },
+                className: "alert-message",
+            });
             return;
         }
+
+        if (!isValidDate(selectedDate)) {
+            messageApi.open({
+                type: "error",
+                content: "Oops! You can only choose today or a future date 💖",
+                icon: <span style={{ fontSize: "18px" }}>⏳</span>,
+                style: { marginTop: "5vh" },
+                className: "alert-message",
+            });
+            return;
+        }
+
         setIsModalOpen(true);
+
     };
 
     const handleSendEmail = () => {
@@ -114,6 +133,17 @@ const DateGame = () => {
             });
         });
 
+        if (!isValidGmail(yourEmail) || !isValidGmail(specialEmail)) {
+            messageApi.open({
+                type: "error",
+                content: "Please enter valid Gmail addresses 💌",
+                icon: <span style={{ fontSize: "18px" }}>⚠️</span>,
+                style: { marginTop: "5vh" },
+                className: "alert-message",
+            });
+            return;
+        }
+
         messageApi.open({
             type: "error",
             content: "Emails sent successfully!",
@@ -135,7 +165,7 @@ const DateGame = () => {
         if (hisName.trim() === "" || herName.trim() === "") {
             messageApi.open({
                 type: "error",
-                content: "The dreamers names can't be empty",
+                content: "The travelers names can't be empty",
                 icon: <span style={{ fontSize: "18px" }}>💔</span>,
                 style: { marginTop: "5vh" },
                 className: "alert-message",
@@ -167,6 +197,22 @@ const DateGame = () => {
         });
     };
 
+    const nameUppercase = (name: string) => {
+        return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+    }
+
+    const isValidGmail = (email: string) => {
+        const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+        return gmailRegex.test(email);
+    };
+
+    const isValidDate = (date: Dayjs | null) => {
+        if (!date) return false;
+        const today = dayjs().startOf("day");
+        return date.isSame(today, "day") || date.isAfter(today, "day");
+    };
+
+
     return (
         <div className='main-div'>
             {contextHolder}
@@ -179,14 +225,14 @@ const DateGame = () => {
                                 <p className='landing-page-text' style={{ marginTop: "-1vh", textAlign: "center" }} > Your names are the whispers that destiny has been waiting for.</p>
                                 <div className='names-input-div'>
                                     <p className='landing-page-text' > Whisper your name, beloved traveler of the heart.</p>
-                                    <Input ref={inputFocus} value={herName} onChange={(e) => setHerName(e.target.value)} className='his-her-name-input' />
+                                    <Input className='his-her-name-input' ref={inputFocus} value={nameUppercase(herName)} onChange={(e) => setHerName(e.target.value)} onKeyDown={(e) => e.key === "Enter" && handleLandingPage()} />
                                 </div>
                                 <div className='names-input-div'>
-                                    <p className='landing-page-text' >And Who holds the key to your heart's secret garden? </p>
-                                    <Input value={hisName} onChange={(e) => setHisName(e.target.value)} className='his-her-name-input' />
+                                    <p className='landing-page-text' >And who holds the key to your heart's secret garden? </p>
+                                    <Input className='his-her-name-input' value={nameUppercase(hisName)} onChange={(e) => setHisName(e.target.value)} onKeyDown={(e) => e.key === "Enter" && handleLandingPage()} />
                                 </div>
                             </Col>
-                            <Col sm={24} md={24} lg={2} xl={2} xxl={2} className='landing-enter-btn'  >
+                            <Col sm={24} md={24} lg={2} xl={2} xxl={2} className='landing-enter-btn-col'  >
                                 <div onClick={handleLandingPage} className='landing-page-btn' >
                                     <svg className='landing-svg' viewBox="0 0 512 512" style={{ height: "20px", width: "20px", marginLeft: "2px", }}>
                                         <path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"> </path>
@@ -202,7 +248,7 @@ const DateGame = () => {
                         <div className='date-asking-page'  >
                             <div className='text-div'>
                                 <p className='will-you-go-on-a-date-with-me-text'  >
-                                    <span className='her-name-span' > {herName.charAt(0).toUpperCase() + herName.slice(1).toLowerCase()} </span>
+                                    <span className='her-name-span' > {nameUppercase(herName)} </span>
                                     will you go on a date with me ? </p>
                                 <div className='cupid-images-div' >
                                     <img className='cupid-images' src={handleImageChange(timesHovered)} alt='cupid-image' />
@@ -281,7 +327,7 @@ const DateGame = () => {
                             </Col>
                         </Row>
 
-                        <Modal
+                        <Modal className='email-modal'
                             title="Send Email"
                             open={isModalOpen}
                             onCancel={() => setIsModalOpen(false)}
@@ -289,23 +335,12 @@ const DateGame = () => {
                             okText="Send Email 💌"
                             okButtonProps={{
                                 style: {
-                                    backgroundColor: "#ff5a76",
-                                    borderColor: "#ff5a76",
-                                    color: "white",
-                                    padding: "6px 11px 8px 16px",
-                                    fontFamily: "Signatra",
-                                    fontSize: "1.5rem",
-                                    marginTop: "-1px"
+                                    backgroundColor: "#ff5a76", borderColor: "#ff5a76", color: "white", padding: "6px 11px 8px 16px", fontFamily: "Signatra", fontSize: "1.5rem", marginTop: "-1px"
                                 },
                             }}
                             cancelButtonProps={{
                                 style: {
-                                    backgroundColor: "white",
-                                    borderColor: "#ff5a76",
-                                    color: "#ff5a76",
-                                    padding: "8px 16px 7px",
-                                    borderRadius: "20px",
-                                    marginTop: "1px"
+                                    backgroundColor: "white", borderColor: "#ff5a76", color: "#ff5a76", padding: "8px 16px 7px", borderRadius: "20px", marginTop: "1px"
                                 },
                             }}
                             modalRender={(modal) => (
@@ -314,18 +349,20 @@ const DateGame = () => {
                                 </div>
                             )}
                         >
-                            <label>Your Email:</label>
+                            <label className='email-input-label' >Your Email:</label>
                             <Input className='email-inputs' style={{ marginBottom: "10px" }}
                                 value={yourEmail}
                                 onChange={(e) => setYourEmail(e.target.value)}
+                                status={yourEmail && !isValidGmail(yourEmail) ? "error" : ""}
                             />
 
-                            <label>Special Person's Email:</label>
+                            <label className='email-input-label' >Special Person's Email:</label>
                             <Input className='email-inputs' style={{ marginBottom: "10px" }}
                                 value={specialEmail}
                                 onChange={(e) => setSpecialEmail(e.target.value)}
+                                status={specialEmail && !isValidGmail(specialEmail) ? "error" : ""}
                             />
-                            <p style={{ color: "#FF5A76", fontSize: "10px", marginTop: "8px" }}>
+                            <p style={{ color: "#FF5A76", fontSize: "14px", marginTop: "8px" }}>
                                 This special invitation is sent with love by <b>Sai Javvadi</b> 💌
                             </p>
 

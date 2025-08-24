@@ -5,7 +5,6 @@
     font-style: normal;
 }
 
-
 @font-face {
     font-family: 'Signatra';
     src: url('../fonts/Signatra.otf') format('opentype');
@@ -13,7 +12,15 @@
     font-style: normal;
 }
 
+::selection {
+    background: #ff5a76;
+    color: white;
+}
 
+::-moz-selection {
+    background: #ff5a76;
+    color: white;
+}
 
 
 
@@ -23,6 +30,8 @@
 }
 
 
+/* landingPage Styles */
+
 .landing-page {
     width: 100%;
     height: 100%;
@@ -31,6 +40,29 @@
     background-repeat: no-repeat;
 }
 
+.his-her-name-row-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-top: 61vh
+}
+
+.his-her-name-row {
+    background: rgba(255, 202, 212, 0.22);
+    border-color: #ff5d8f;
+    width: 63%;
+    border-radius: 30px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgb(0, 0, 0, 0.01);
+    display: flex;
+    justify-content: space-around;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+}
+
+.names-input-div {
+    display: flex;
+}
 
 .landing-page-text {
     color: #ffcad4;
@@ -41,6 +73,32 @@
     margin-bottom: 5px;
     word-spacing: 2px;
     letter-spacing: 2px;
+}
+
+.his-her-name-input {
+    width: 150px;
+    height: 35px;
+    background: rgba(255, 202, 212, 0.22);
+    border-color: #ff5d8f;
+    color: #ffd7de;
+    font-weight: 600;
+    font-family: "HestinaFontbyKeithzo";
+    font-size: 1rem;
+    letter-spacing: 1px;
+    margin-top: 8px;
+}
+
+:where(.his-her-name-input, .email-inputs).ant-input-outlined:hover,
+.ant-input-outlined:focus {
+    background: rgba(255, 202, 212, 0.22);
+    border-color: #ff5d8f;
+}
+
+.landing-enter-btn-col {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px
 }
 
 .landing-page-btn {
@@ -69,51 +127,6 @@ svg {
     border-color: #FF5A76;
 }
 
-.his-her-name-row-container {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding-top: 61vh
-}
-
-
-.his-her-name-row {
-    background: rgba(255, 202, 212, 0.22);
-    border-color: #ff5d8f;
-    width: 63%;
-    border-radius: 30px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgb(0, 0, 0, 0.01);
-    display: flex;
-    justify-content: space-around;
-    backdrop-filter: blur(2px);
-    -webkit-backdrop-filter: blur(2px);
-}
-
-
-.his-her-name-input {
-    width: 150px;
-    height: 35px;
-    background: rgba(255, 202, 212, 0.22);
-    border-color: #ff5d8f;
-    color: #ffd7de;
-    font-weight: 600;
-    font-family: "HestinaFontbyKeithzo";
-    font-size: 1rem;
-    letter-spacing: 1px;
-    margin-top: 8px;
-}
-
-.names-input-div {
-    display: flex;
-}
-
-:where(.his-her-name-input, .email-inputs).ant-input-outlined:hover,
-.ant-input-outlined:focus {
-    background: rgba(255, 202, 212, 0.22);
-    border-color: #ff5d8f;
-}
-
 .ant-message .ant-message-notice-wrapper .ant-message-notice-content {
     background: rgba(255, 202, 212, 0.22);
     border-radius: 20px;
@@ -123,15 +136,15 @@ svg {
     letter-spacing: 2px;
     padding: 9px 16px 7px 12px;
     box-shadow: 0 4px 8px rgb(0, 0, 0, 0.01);
-
 }
 
-.landing-enter-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: 10px
-}
+
+
+
+
+
+/* DateAsking Page Styles */
+
 
 .date-asking-page {
     background-image: url('..//images/common-wallpaper.jpg');
@@ -159,6 +172,11 @@ svg {
     letter-spacing: 1px;
 }
 
+.will-you-go-on-a-date-with-me-text {
+    margin: 10px;
+    color: #ffcad4
+}
+
 .her-name-span {
     font-family: "HestinaFontbyKeithzo";
     font-size: 1.5rem
@@ -172,16 +190,9 @@ svg {
     border-radius: 15px
 }
 
-
 .cupid-images {
     border-radius: 15px
 }
-
-.will-you-go-on-a-date-with-me-text {
-    margin: 10px;
-    color: #ffcad4
-}
-
 
 .yes-btn {
     background-color: #ff5a76;
@@ -195,6 +206,27 @@ svg {
 }
 
 .no-btn {
+    background-color: #ff5a76;
+    color: white;
+    margin-top: 15px;
+    padding: 13px 30px 11px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+:where(.yes-btn).ant-btn-variant-outlined:not(:disabled):not(.ant-btn-disabled):hover {
+    background-color: #ff5a76;
+    color: white;
+    margin-top: 15px;
+    padding: 11px 30px 13px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    position: relative;
+}
+
+:where(.no-btn).ant-btn-variant-outlined:not(:disabled):not(.ant-btn-disabled):hover {
     background-color: #ff5a76;
     color: white;
     margin-top: 15px;
@@ -220,31 +252,33 @@ svg {
     border-radius: 20px
 }
 
-
-
-:where(.yes-btn).ant-btn-variant-outlined:not(:disabled):not(.ant-btn-disabled):hover {
-    background-color: #ff5a76;
-    color: white;
-    margin-top: 15px;
-    padding: 11px 30px 13px;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    position: relative;
+:where(.do-you-really-love-me-modal).ant-modal .ant-modal-footer {
+    text-align: end;
+    background: transparent;
+    margin-top: 20px;
+    padding: 0;
+    border-top: none;
+    border-radius: 0;
 }
 
-:where(.no-btn).ant-btn-variant-outlined:not(:disabled):not(.ant-btn-disabled):hover {
-    background-color: #ff5a76;
-    color: white;
-    margin-top: 15px;
-    padding: 13px 30px 11px;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
+.ant-modal .ant-modal-title {
+    margin: 0;
+    background-color: #ffcad4;
+    color: #FF5A76;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 1.5;
+    word-wrap: break-word;
+}
+
+.do-you-wanna-go-out-with-me-text {
+    font-size: 2rem;
+    margin: 10px 0px 5px;
 }
 
 
 
+/* Calendar Page Styles */
 
 .calendar-page {
     background-image: url('..//images/common-wallpaper.jpg');
@@ -259,18 +293,6 @@ svg {
     flex-direction: column;
 }
 
-.email-inputs {
-    background: rgba(255, 202, 212, 0.22);
-    border-color: #ff5d8f;
-    color: #ff5d8f;
-    font-weight: 600;
-    font-family: "HestinaFontbyKeithzo";
-    font-size: 1rem;
-    letter-spacing: 1px;
-}
-
-
-
 .photo-calendar-row {
     background: rgba(255, 202, 212, 0.22);
     margin: 0 auto;
@@ -284,6 +306,11 @@ svg {
     gap: 10px;
 }
 
+.calendar-date-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 20px
+}
 
 .calendar-text {
     width: 130%;
@@ -293,15 +320,6 @@ svg {
     letter-spacing: 2px;
     margin: 5px 0px;
 }
-
-
-.calendar-date-image {
-    width: 100%;
-    height: 100%;
-    border-radius: 20px
-}
-
-
 
 .calendar-page-btn {
     width: 160px;
@@ -313,183 +331,15 @@ svg {
     border: none
 }
 
-
-
-
-
-
-
-
-
-:where(.calendar-page-btn).ant-btn-variant-outlined:not(:disabled):not(.ant-btn-disabled):hover {
-    background-color: #f4788d;
-    color: white;
-}
-
-
-
-
-.ant-picker-calendar .ant-picker-panel .ant-picker-body {
-    border-radius: 0px 0px 18px 18px;
-    background-color: #ffcad4;
-}
-
-:where(.css-dev-only-do-not-override-l9pxc0).ant-picker-calendar-mini {
-    border-radius: 19px;
-}
-
-.ant-picker-calendar-mini .ant-picker-calendar-header {
-    border-radius: 18px 18px 0px 0px;
-    background-color: #ffcad4;
-}
-
-
-
-.ant-picker-calendar-mini .ant-picker-panel {
-    border-radius: 0 0 24px 24px;
-}
-
-.ant-picker-calendar .ant-picker-cell-in-view.ant-picker-cell-selected:not(.ant-picker-cell-disabled) .ant-picker-cell-inner {
-    color: white;
-    background-color: #FF5A76;
-}
-
-
-.ant-picker-calendar .ant-picker-cell-in-view.ant-picker-cell-today .ant-picker-cell-inner::before {
-    /* background-color: #FF5A76; */
-    border: 0px solid #ffcad4;
-    color: white;
-}
-
-.ant-select-outlined:not(.ant-select-customize-input) .ant-select-selector {
-    color: white;
-    background-color: #FF5A76;
-    border: 0px solid #ffcad4;
-
-}
-
-
-.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
-    z-index: 1;
-    color: white;
-    background: #ff5a76;
-    border: 0px solid #ffcad4;
-}
-
-.ant-btn-variant-outlined {
-
-    font-family: "Signatra";
-    font-size: 1.5rem;
+.email-inputs {
+    background: rgba(255, 202, 212, 0.22);
+    border-color: #ff5d8f;
+    color: #ff5d8f;
+    font-weight: 600;
+    font-family: "HestinaFontbyKeithzo";
+    font-size: 1rem;
     letter-spacing: 1px;
 }
-
-
-
-.ant-radio-button-wrapper {
-    color: white;
-    font-size: 14px;
-    line-height: 30px;
-    background: #ff5a76;
-    border: 0px solid #ffcad4;
-}
-
-
-
-
-
-.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled)::before {
-    background-color: white;
-}
-
-
-
-.ant-radio-button-wrapper:hover {
-    color: white;
-}
-
-.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):active {
-    color: white;
-}
-
-
-
-.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):active::before {
-    background-color: white;
-}
-
-
-
-
-.ant-select-single.ant-select-sm.ant-select-open .ant-select-selection-item {
-    color: white
-}
-
-
-
-
-.ant-modal .ant-modal-content {
-    position: relative;
-    background-color: #ffcad4;
-    color: #FF5A76;
-    background-clip: padding-box;
-    border: 0;
-    border-radius: 25px;
-    box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
-    pointer-events: auto;
-    padding: 20px 24px;
-}
-
-
-:where(.css-dev-only-do-not-override-l9pxc0).ant-modal .ant-modal-header {
-    color: rgba(0, 0, 0, 0.88);
-    background: inherit;
-    border-radius: 8px 8px 0 0;
-    margin-bottom: 8px;
-    padding: 0;
-    border-bottom: none;
-}
-
-
-
-:where(.css-dev-only-do-not-override-l9pxc0).ant-btn-variant-solid {
-    color: #fff;
-    background: #ff5a76;
-    border-radius: 20px;
-    padding: 8px 30px;
-}
-
-.ant-btn-variant-solid:not(:disabled):not(.ant-btn-disabled):hover {
-    background: #ff5a76;
-    color: #fff;
-    border-radius: 20px;
-    padding: 8px 30px;
-}
-
-.ant-picker-calendar .ant-select-arrow svg {
-    fill: white;
-    width: 14px;
-    height: 14px;
-}
-
-.ant-picker-calendar .ant-select-arrow svg {
-    transition: transform 0.3s;
-}
-
-.ant-picker-calendar .ant-select-open .ant-select-arrow svg {
-    transform: rotate(180deg);
-}
-
-
-
-
-.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover {
-    color: white;
-    border-color: white;
-}
-
-
-
-
 
 .date-calendar .ant-select-dropdown {
     box-sizing: border-box;
@@ -511,143 +361,181 @@ svg {
     box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
 }
 
+.ant-select-dropdown .ant-select-item {
+    color: #ff4d4f;
+}
 
+.ant-picker-calendar .ant-picker-content th {
+    color: #ff4d4f;
+}
+
+.ant-picker-calendar .ant-picker-cell-in-view {
+    color: #ff4d4f;
+}
 
 .date-calendar .ant-select-dropdown .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
     color: white;
     font-weight: 600;
-    background-color: #ff5d8f;
+    background-color: #f4788d;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-:where(.do-you-really-love-me-modal).ant-modal .ant-modal-footer {
-    text-align: end;
-    background: transparent;
-    margin-top: 20px;
-    padding: 0;
-    border-top: none;
-    border-radius: 0;
+:where(.calendar-page-btn).ant-btn-variant-outlined:not(:disabled):not(.ant-btn-disabled):hover {
+    background-color: #f4788d;
+    color: white;
 }
 
+.ant-picker-calendar-mini {
+    border-radius: 18px;
+}
 
+.ant-picker-calendar-mini .ant-picker-calendar-header {
+    border-radius: 18px 18px 0px 0px;
+    background-color: #ffcad4;
+}
 
+.ant-picker-calendar-mini .ant-picker-panel {
+    border-radius: 0 0 24px 24px;
+}
+
+.ant-picker-calendar .ant-picker-panel .ant-picker-body {
+    border-radius: 0px 0px 18px 18px;
+    background-color: #ffcad4;
+}
+
+.ant-picker-calendar .ant-picker-cell-in-view.ant-picker-cell-selected:not(.ant-picker-cell-disabled) .ant-picker-cell-inner {
+    color: white;
+    background-color: #FF5A76;
+}
+
+.ant-picker-calendar .ant-picker-cell-in-view.ant-picker-cell-today .ant-picker-cell-inner::before {
+    /* background-color: #FF5A76; */
+    border: 0px solid #ffcad4;
+    color: white;
+}
+
+.ant-picker-calendar .ant-select-arrow svg {
+    fill: white;
+    width: 14px;
+    height: 14px;
+}
+
+.ant-picker-calendar .ant-select-arrow svg {
+    transition: transform 0.3s;
+}
+
+.ant-picker-calendar .ant-select-open .ant-select-arrow svg {
+    transform: rotate(180deg);
+}
+
+.ant-select-outlined:not(.ant-select-customize-input) .ant-select-selector {
+    color: white;
+    background-color: #FF5A76;
+    border: 0px solid #ffcad4;
+}
+
+.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
+    z-index: 1;
+    color: white;
+    background: #ff5a76;
+    border: 0px solid #ffcad4;
+}
+
+.ant-btn-variant-outlined {
+    font-family: "Signatra";
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+}
+
+.ant-radio-button-wrapper {
+    color: white;
+    font-size: 14px;
+    line-height: 30px;
+    background: #ff5a76;
+    border: 0px solid #ffcad4;
+}
+
+.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled)::before {
+    background-color: white;
+}
+
+.ant-radio-button-wrapper:hover {
+    color: white;
+}
+
+.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):active {
+    color: white;
+}
+
+.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):active::before {
+    background-color: white;
+}
+
+.ant-select-single.ant-select-sm.ant-select-open .ant-select-selection-item {
+    color: white
+}
 
 .ant-modal .ant-modal-title {
-    margin: 0;
-    background-color: #ffcad4;
-    color: #FF5A76;
     font-weight: 600;
-    font-size: 16px;
-    line-height: 1.5;
-    word-wrap: break-word;
+    font-size: 1.5rem;
+}
+
+.email-input-label {
+    font-size: 1.2rem;
+}
+
+.ant-input-outlined.ant-input-status-error:not(.ant-input-disabled) {
+    background: #ffcad4;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #ff4d4f;
+}
+
+.ant-input-outlined.ant-input-status-error:not(.ant-input-disabled):hover {
+    border-color: #ff4d4f;
+    background-color: #ffcad4;
 }
 
 
+.ant-input-outlined.ant-input-status-error:not(.ant-input-disabled):focus {
+    border-color: #ff4d4f;
+    background-color: #ffcad4;
+}
+
+.ant-modal .ant-modal-content {
+    position: relative;
+    background-color: #ffcad4;
+    color: #FF5A76;
+    background-clip: padding-box;
+    border: 0;
+    border-radius: 25px;
+    box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+    pointer-events: auto;
+    padding: 20px 24px;
+    font-family: "Signatra";
+}
+
+.ant-btn-variant-solid {
+    color: #fff;
+    background: #ff5a76;
+    border-radius: 20px;
+    padding: 8px 30px;
+}
+
+.ant-btn-variant-solid:not(:disabled):not(.ant-btn-disabled):hover {
+    background: #ff5a76;
+    color: #fff;
+    border-radius: 20px;
+    padding: 8px 30px;
+}
 
 
+.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover {
+    color: white;
+    border-color: white;
+}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* linear-gradient(135deg, #FFC1CC, #CBA6F7) → romantic soft sky.
-
-linear-gradient(180deg, #FFD9A0, #FFC1CC) → sunset vibe.
-
-linear-gradient(120deg, #A3D5FF, #CBA6F7, #FFC1CC) → whimsical magical feel. */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* @media (min-height: 701px) {
-    .his-her-name-row-container {
-        padding-top: 56vh;
-    }
-} */
+/* responsive code starts here */
 
 /* Extra small (phones) */
 @media (max-width: 575px) and (max-height: 700px) {
@@ -663,8 +551,6 @@ linear-gradient(120deg, #A3D5FF, #CBA6F7, #FFC1CC) → whimsical magical feel. *
         padding-top: 46vh
     }
 
-
-
     .his-her-name-row {
         width: 90%;
         padding: 20px 10px 10px;
@@ -672,13 +558,11 @@ linear-gradient(120deg, #A3D5FF, #CBA6F7, #FFC1CC) → whimsical magical feel. *
         -webkit-backdrop-filter: blur(2px);
     }
 
-
     .landing-page-text {
         font-size: 1rem;
         margin-right: 0px;
         margin-top: 7px;
         text-align: start;
-
     }
 
     .names-input-div {
@@ -690,7 +574,6 @@ linear-gradient(120deg, #A3D5FF, #CBA6F7, #FFC1CC) → whimsical magical feel. *
     .names-input-div:last-child {
         margin-top: 10px;
     }
-
 
     .his-her-name-input {
         width: 96.7%;
@@ -729,7 +612,6 @@ linear-gradient(120deg, #A3D5FF, #CBA6F7, #FFC1CC) → whimsical magical feel. *
         justify-content: space-evenly;
     }
 
-
     .cupid-images-div {
         width: 100%;
         height: 80%;
@@ -749,7 +631,6 @@ linear-gradient(120deg, #A3D5FF, #CBA6F7, #FFC1CC) → whimsical magical feel. *
         margin: 4px 1px -2px;
     }
 
-
     .ant-modal .ant-modal-content {
         pointer-events: auto;
         padding: 20px 15px;
@@ -757,19 +638,15 @@ linear-gradient(120deg, #A3D5FF, #CBA6F7, #FFC1CC) → whimsical magical feel. *
         margin: 0 auto;
     }
 
-
     .do-you-wanna-go-out-with-me-text {
         font-size: 1rem;
-
     }
-
 
     .date-ask-modal-no-btn {
         padding: 6px 16px 3px;
         border-radius: 20px;
         font-size: 1rem;
     }
-
 
     .date-ask-modal-yes-btn {
         padding: 6px 16px 8px;
@@ -782,7 +659,6 @@ linear-gradient(120deg, #A3D5FF, #CBA6F7, #FFC1CC) → whimsical magical feel. *
 
     /* calendar-page */
 
-
     .photo-calendar-row {
         padding: 10px 10px;
         width: 90vw;
@@ -793,10 +669,6 @@ linear-gradient(120deg, #A3D5FF, #CBA6F7, #FFC1CC) → whimsical magical feel. *
         gap: 10px;
     }
 
-
-
-
-
     .calendar-text {
         width: 100%;
         color: #ffcad4;
@@ -805,11 +677,6 @@ linear-gradient(120deg, #A3D5FF, #CBA6F7, #FFC1CC) → whimsical magical feel. *
         letter-spacing: 2px;
         margin: -10px 0px 10px;
     }
-
-
-
-
-
 
     .ant-picker-calendar {
         height: 300px;
@@ -827,13 +694,9 @@ linear-gradient(120deg, #A3D5FF, #CBA6F7, #FFC1CC) → whimsical magical feel. *
         padding: 4px 8px;
     }
 
-
-
-
     .responsive-calendar {
         height: 300px;
     }
-
 
     .calendar-page-btn {
         width: 120px;
@@ -859,14 +722,6 @@ linear-gradient(120deg, #A3D5FF, #CBA6F7, #FFC1CC) → whimsical magical feel. *
         background: #fff0f5;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
-
-
-
-
-
-
-
-
 }
 
 /* Small (phones) */
@@ -890,7 +745,6 @@ linear-gradient(120deg, #A3D5FF, #CBA6F7, #FFC1CC) → whimsical magical feel. *
         -webkit-backdrop-filter: blur(2px);
     }
 
-
     .landing-page-text {
         font-size: 1rem;
         margin-right: 0px;
@@ -909,7 +763,6 @@ linear-gradient(120deg, #A3D5FF, #CBA6F7, #FFC1CC) → whimsical magical feel. *
         margin-top: 10px;
     }
 
-
     .his-her-name-input {
         width: 96.7%;
         margin-left: -1px;
@@ -918,7 +771,7 @@ linear-gradient(120deg, #A3D5FF, #CBA6F7, #FFC1CC) → whimsical magical feel. *
         letter-spacing: 1px;
     }
 
-    .landing-enter-btn {
+    .landing-enter-btn-col {
         margin-top: 10px;
         margin-bottom: 3px;
     }
@@ -947,7 +800,6 @@ linear-gradient(120deg, #A3D5FF, #CBA6F7, #FFC1CC) → whimsical magical feel. *
         justify-content: space-evenly;
     }
 
-
     .cupid-images-div {
         width: 100%;
         height: 80%;
@@ -956,17 +808,14 @@ linear-gradient(120deg, #A3D5FF, #CBA6F7, #FFC1CC) → whimsical magical feel. *
         border-radius: 15px;
     }
 
-
     .cupid-images {
         border-radius: 21px
     }
-
 
     .will-you-go-on-a-date-with-me-text {
         font-size: 1.2rem;
         margin: 4px 1px -2px;
     }
-
 
     .ant-modal .ant-modal-content {
         pointer-events: auto;
@@ -975,19 +824,15 @@ linear-gradient(120deg, #A3D5FF, #CBA6F7, #FFC1CC) → whimsical magical feel. *
         margin: 0 auto;
     }
 
-
     .do-you-wanna-go-out-with-me-text {
         font-size: 1rem;
-
     }
-
 
     .date-ask-modal-no-btn {
         padding: 6px 16px 3px;
         border-radius: 20px;
         font-size: 1rem;
     }
-
 
     .date-ask-modal-yes-btn {
         padding: 6px 16px 8px;
@@ -997,23 +842,17 @@ linear-gradient(120deg, #A3D5FF, #CBA6F7, #FFC1CC) → whimsical magical feel. *
 
 
 
-
     /* calendar-page */
-
 
     .photo-calendar-row {
         padding: 10px 10px;
         width: 90vw;
-        height: 75%;
+        height: 76%;
         display: flex;
         justify-content: center;
         align-items: center;
         gap: 10px;
     }
-
-
-
-
 
     .calendar-text {
         width: 100%;
@@ -1024,10 +863,20 @@ linear-gradient(120deg, #A3D5FF, #CBA6F7, #FFC1CC) → whimsical magical feel. *
         margin: -10px 0px 10px;
     }
 
+    .responsive-calendar {
+        height: 300px;
+    }
 
-
-
-
+    .calendar-page-btn {
+        width: 120px;
+        padding: 9px 10px 12px 21px;
+        margin-top: 10px;
+        background-color: #f4788d;
+        color: white;
+        border-radius: 20px;
+        border: none;
+        font-size: 1rem;
+    }
 
     .ant-picker-calendar {
         /* height: 300px; */
@@ -1045,30 +894,10 @@ linear-gradient(120deg, #A3D5FF, #CBA6F7, #FFC1CC) → whimsical magical feel. *
         padding: 4px 8px;
     }
 
-
-
-
-    .responsive-calendar {
-        height: 300px;
-    }
-
-
-    .calendar-page-btn {
-        width: 120px;
-        padding: 9px 10px 12px 21px;
-        margin-top: 10px;
-        background-color: #f4788d;
-        color: white;
-        border-radius: 20px;
-        border: none;
-        font-size: 1rem;
-    }
-
     :where(.calendar-page-btn).ant-btn-variant-outlined:not(:disabled):not(.ant-btn-disabled):hover {
         background-color: #f4788d;
         color: white;
     }
-
 
     :where(.calendar-page-btn-alert-message) .ant-message .ant-message-notice-wrapper .ant-message-notice-content {
         color: #ff5d8f;
@@ -1077,8 +906,6 @@ linear-gradient(120deg, #A3D5FF, #CBA6F7, #FFC1CC) → whimsical magical feel. *
         background: #fff0f5;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
-
-
 }
 
 /* Medium (tablets) */
