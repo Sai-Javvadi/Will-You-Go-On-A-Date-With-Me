@@ -14,7 +14,7 @@ const DateGame = () => {
     const [specialEmail, setSpecialEmail] = useState<string>("")
     const [timesHovered, setTimesHovered] = useState<number>(0)
     const [open20TimesModal, setOpen20TimesModal] = useState<boolean>(false)
-    const [landingPage, setLandingPage] = useState<boolean>(false)
+    const [landingPage, setLandingPage] = useState<boolean>(true)
     const [dateAskingPage, setDateAskingPage] = useState<boolean>(false)
     const [herName, setHerName] = useState<string>("")
     const [hisName, setHisName] = useState<string>("")
