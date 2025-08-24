@@ -15,7 +15,7 @@ const DateGame = () => {
     const [landingPage, setLandingPage] = useState<boolean>(true)
     const [dateAskingPage, setDateAskingPage] = useState<boolean>(false)
     const [timesHovered, setTimesHovered] = useState<number>(0)
-    const [yayyModal, setYayyModal] = useState<boolean>(false)
+    // const [yayyModal, setYayyModal] = useState<boolean>(false)
     const [open20TimesModal, setOpen20TimesModal] = useState<boolean>(false)
     const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
     const [calendarDateModal, setCalendarDateModal] = useState<boolean>(false);
@@ -45,7 +45,7 @@ const DateGame = () => {
                 type: "error",
                 content: "The travelers names can't be empty",
                 icon: <span style={{ fontSize: "18px" }}>💔</span>,
-                style: { marginTop: "5vh" },
+                style: { marginTop: "4vh" },
                 className: "alert-message",
                 // duration: 100
             });
@@ -84,9 +84,9 @@ const DateGame = () => {
 
     const handleYesBtn = () => {
         ConfettiSideCannons();
-        setYayyModal(true);
+        // setYayyModal(true);
         setTimeout(() => { setDateAskingPage(false) }, 3000);
-        setTimeout(() => { setYayyModal(false) }, 1200);
+        // setTimeout(() => { setYayyModal(false) }, 1200);
     }
 
     const handle20TimesModalCancel = () => {
@@ -104,7 +104,7 @@ const DateGame = () => {
             type: "error",
             content: `${currentHerName} doesn't want to go on a date with ${currentHisName}`,
             icon: <span style={{ fontSize: "18px" }}>💔</span>,
-            style: { marginTop: "5vh" },
+            style: { marginTop: "4vh" },
             className: "alert-message",
         });
     };
@@ -115,7 +115,7 @@ const DateGame = () => {
                 type: "error",
                 content: "Please select a date first! 🌙",
                 icon: <span style={{ fontSize: "18px" }}>✨</span>,
-                style: { marginTop: "5vh" },
+                style: { marginTop: "4vh" },
                 className: "alert-message",
             });
             return;
@@ -126,7 +126,7 @@ const DateGame = () => {
                 type: "error",
                 content: "Oops! You can only choose today or a future date 💖",
                 icon: <span style={{ fontSize: "18px" }}>⏳</span>,
-                style: { marginTop: "5vh" },
+                style: { marginTop: "4vh" },
                 className: "alert-message",
             });
             return;
@@ -137,7 +137,24 @@ const DateGame = () => {
 
     const handleSendEmail = () => {
         if (!yourEmail || !specialEmail) {
-            alert("Please enter both email addresses");
+            messageApi.open({
+                type: "error",
+                content: "Please enter both email addresses 💌",
+                icon: <span style={{ fontSize: "18px" }}>⚠️</span>,
+                style: { marginTop: "5vh" },
+                className: "alert-message",
+            });
+            return;
+        }
+
+        if (!isValidGmail(yourEmail) || !isValidGmail(specialEmail)) {
+            messageApi.open({
+                type: "error",
+                content: "Please enter valid Gmail addresses 💌",
+                icon: <span style={{ fontSize: "18px" }}>⚠️</span>,
+                style: { marginTop: "5vh" },
+                className: "alert-message",
+            });
             return;
         }
 
@@ -167,30 +184,19 @@ const DateGame = () => {
             });
         });
 
-        if (!isValidGmail(yourEmail) || !isValidGmail(specialEmail)) {
-            messageApi.open({
-                type: "error",
-                content: "Please enter valid Gmail addresses 💌",
-                icon: <span style={{ fontSize: "18px" }}>⚠️</span>,
-                style: { marginTop: "5vh" },
-                className: "alert-message",
-            });
-            return;
-        }
         setTimeout(() => {
             messageApi.open({
-                type: "error",
-                content: "Your special message is on its way",
-                icon: <span style={{ fontSize: "18px" }}>💌</span>,
+                type: "success",
+                content: "Your special message is on its way 💌",
+                icon: <span style={{ fontSize: "18px" }}>✨</span>,
                 style: { marginTop: "5vh" },
                 className: "alert-message",
-                // duration:100
             });
-        }), 2000;
+        }, 500);
 
         setTimeout(() => {
             setLandingPage(true);
-        }, 2000)
+        }, 2000);
         setCalendarDateModal(false);
         setTimesHovered(0);
         setHerName("");
@@ -198,6 +204,7 @@ const DateGame = () => {
         setYourEmail("");
         setSpecialEmail("");
     };
+
 
     const nameUppercase = (name: string) => {
         return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
@@ -235,11 +242,11 @@ const DateGame = () => {
                             <Col sm={24} md={24} lg={22} xl={21} xxl={21} className='' style={{ display: "flex", flexDirection: "column", alignItems: "start" }} >
                                 <p className='landing-page-text' style={{ marginTop: "-1vh", textAlign: "center" }} > Your names are the whispers that destiny has been waiting for.</p>
                                 <div className='names-input-div'>
-                                    <p className='landing-page-text' > Whisper your name, beloved traveler of the heart.</p>
+                                    <p className='landing-page-text' >Whisper your name, beloved traveler of the heart.</p>
                                     <Input className='his-her-name-input' ref={inputFocus} value={nameUppercase(herName)} onChange={(e) => setHerName(e.target.value)} onKeyDown={(e) => e.key === "Enter" && handleLandingPage()} />
                                 </div>
                                 <div className='names-input-div'>
-                                    <p className='landing-page-text' >And who holds the key to your heart's secret garden? </p>
+                                    <p className='landing-page-text' >And the who holds the key to your heart's secret garden? </p>
                                     <Input className='his-her-name-input' value={nameUppercase(hisName)} onChange={(e) => setHisName(e.target.value)} onKeyDown={(e) => e.key === "Enter" && handleLandingPage()} />
                                 </div>
                             </Col>
@@ -271,7 +278,7 @@ const DateGame = () => {
                             <Row gutter={[16, 16]} >
                                 <Col span={12} >
                                     <Button className='yes-btn'
-                                        onClick={handleYesBtn}
+                                        onClick={handleYesBtn} onTouchStart={handleYesBtn}
                                         style={{ transform: `scale(${1 + timesHovered / 20})`, transition: "transform 0.2s ease" }}
                                     >
                                         Yes
@@ -282,14 +289,14 @@ const DateGame = () => {
                                 </Col>
                             </Row>
 
-                            <Modal
+                            {/* <Modal
                                 footer={null}
                                 open={yayyModal}
                                 closable={false}
                                 className='do-you-really-love-me-modal'
                             >
                                 <h2 className='do-you-wanna-go-out-with-me-text' style={{ textAlign: "center" }} >Yay.....!!!</h2>
-                            </Modal>
+                            </Modal> */}
 
                             <Modal
                                 footer={null}
@@ -335,7 +342,7 @@ const DateGame = () => {
                                             type: "error",
                                             content: "The stars can’t align until you choose a day!",
                                             icon: <span style={{ fontSize: "18px" }}>✨</span>,
-                                            style: { marginTop: "5vh" },
+                                            style: { marginTop: "4vh" },
                                             className: "calendar-page-btn-alert-message",
                                             duration: 100
                                         });
