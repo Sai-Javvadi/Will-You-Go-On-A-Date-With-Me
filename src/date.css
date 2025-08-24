@@ -739,8 +739,8 @@ svg {
     }
 
     .his-her-name-row {
-        width: 90%;
-        padding: 20px 10px 10px;
+        width: 91%;
+        padding: 24px 10px 16px;
         backdrop-filter: blur(2px);
         -webkit-backdrop-filter: blur(2px);
     }
@@ -772,7 +772,7 @@ svg {
     }
 
     .landing-enter-btn-col {
-        margin-top: 10px;
+        margin-top: 15px;
         margin-bottom: 3px;
     }
 
