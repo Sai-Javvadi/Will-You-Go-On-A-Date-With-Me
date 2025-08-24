@@ -6,21 +6,30 @@ import type { Dayjs } from 'dayjs';
 import dayLocaleData from 'dayjs/plugin/localeData';
 import { Button, Col, Row, Calendar, Modal, Input, message } from 'antd';
 import type { CalendarProps } from 'antd';
+import { ConfettiSideCannons } from './confetti-side-cannons';
 
 const DateGame = () => {
-    const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
-    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-    const [yourEmail, setYourEmail] = useState<string>("");
-    const [specialEmail, setSpecialEmail] = useState<string>("")
-    const [timesHovered, setTimesHovered] = useState<number>(0)
-    const [open20TimesModal, setOpen20TimesModal] = useState<boolean>(false)
-    const [landingPage, setLandingPage] = useState<boolean>(true)
-    const [dateAskingPage, setDateAskingPage] = useState<boolean>(false)
     const [herName, setHerName] = useState<string>("")
     const [hisName, setHisName] = useState<string>("")
     const [messageApi, contextHolder] = message.useMessage();
+    const [landingPage, setLandingPage] = useState<boolean>(true)
+    const [dateAskingPage, setDateAskingPage] = useState<boolean>(false)
+    const [timesHovered, setTimesHovered] = useState<number>(0)
+    const [yayyModal, setYayyModal] = useState<boolean>(false)
+    const [open20TimesModal, setOpen20TimesModal] = useState<boolean>(false)
+    const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
+    const [calendarDateModal, setCalendarDateModal] = useState<boolean>(false);
+    const [yourEmail, setYourEmail] = useState<string>("");
+    const [specialEmail, setSpecialEmail] = useState<string>("")
 
     dayjs.extend(dayLocaleData);
+
+    const inputFocus = useRef(null)
+    useEffect(() => {
+        if (inputFocus.current) {
+            (inputFocus.current as HTMLInputElement).focus();
+        }
+    }, [landingPage]);
 
     const images = Array.from({ length: 9 }, (_, i) => `/images/cupid-images/image-${i + 1}.png`);
     const handleImageChange = (timesHovered: number) => {
@@ -30,22 +39,21 @@ const DateGame = () => {
         return images[index] || images[0];
     };
 
-    const inputFocus = useRef(null)
-
-    useEffect(() => {
-        if (inputFocus.current) {
-            (inputFocus.current as HTMLInputElement).focus();
+    const handleLandingPage = () => {
+        if (hisName.trim() === "" || herName.trim() === "") {
+            messageApi.open({
+                type: "error",
+                content: "The travelers names can't be empty",
+                icon: <span style={{ fontSize: "18px" }}>💔</span>,
+                style: { marginTop: "5vh" },
+                className: "alert-message",
+                // duration: 100
+            });
+            return;
         }
-    }, [landingPage]);
 
-
-    const onPanelChange = (value: Dayjs, mode: CalendarProps<Dayjs>['mode']) => {
-        console.log(value.format('DD-MM-YYYY'), mode);
-    };
-
-    const onDateSelect = (value: Dayjs) => {
-        setSelectedDate(value);
-        console.log("Date selected:", value.format("DD-MM-YYYY"));
+        setLandingPage(false);
+        setDateAskingPage(true);
     };
 
     const moveBtn = () => {
@@ -74,7 +82,34 @@ const DateGame = () => {
         console.log(timesHovered);
     }
 
-    const openModal = () => {
+    const handleYesBtn = () => {
+        ConfettiSideCannons();
+        setYayyModal(true);
+        setTimeout(() => { setDateAskingPage(false) }, 3000);
+        setTimeout(() => { setYayyModal(false) }, 1200);
+    }
+
+    const handle20TimesModalCancel = () => {
+        const currentHerName = herName;
+        const currentHisName = hisName;
+
+        setOpen20TimesModal(false);
+        setTimesHovered(0);
+        setLandingPage(true);
+        setHerName("");
+        setHisName("");
+        ConfettiSideCannons()
+
+        messageApi.open({
+            type: "error",
+            content: `${currentHerName} doesn't want to go on a date with ${currentHisName}`,
+            icon: <span style={{ fontSize: "18px" }}>💔</span>,
+            style: { marginTop: "5vh" },
+            className: "alert-message",
+        });
+    };
+
+    const openCalendarDateModal = () => {
         if (!selectedDate) {
             messageApi.open({
                 type: "error",
@@ -97,8 +132,7 @@ const DateGame = () => {
             return;
         }
 
-        setIsModalOpen(true);
-
+        setCalendarDateModal(true);
     };
 
     const handleSendEmail = () => {
@@ -143,58 +177,26 @@ const DateGame = () => {
             });
             return;
         }
+        setTimeout(() => {
+            messageApi.open({
+                type: "error",
+                content: "Your special message is on its way",
+                icon: <span style={{ fontSize: "18px" }}>💌</span>,
+                style: { marginTop: "5vh" },
+                className: "alert-message",
+                // duration:100
+            });
+        }), 2000;
 
-        messageApi.open({
-            type: "error",
-            content: "Emails sent successfully!",
-            icon: <span style={{ fontSize: "18px" }}>💌</span>,
-            style: { marginTop: "5vh" },
-            className: "alert-message",
-            // duration:100
-        });
-        setIsModalOpen(false);
+        setTimeout(() => {
+            setLandingPage(true);
+        }, 2000)
+        setCalendarDateModal(false);
         setTimesHovered(0);
-        setLandingPage(true);
         setHerName("");
         setHisName("");
         setYourEmail("");
         setSpecialEmail("");
-    };
-
-    const handleLandingPage = () => {
-        if (hisName.trim() === "" || herName.trim() === "") {
-            messageApi.open({
-                type: "error",
-                content: "The travelers names can't be empty",
-                icon: <span style={{ fontSize: "18px" }}>💔</span>,
-                style: { marginTop: "5vh" },
-                className: "alert-message",
-                // duration: 100
-            });
-            return;
-        }
-
-        setLandingPage(false);
-        setDateAskingPage(true);
-    };
-
-    const handle20TimesModalCancel = () => {
-        const currentHerName = herName;
-        const currentHisName = hisName;
-
-        setOpen20TimesModal(false);
-        setTimesHovered(0);
-        setLandingPage(true);
-        setHerName("");
-        setHisName("");
-
-        messageApi.open({
-            type: "error",
-            content: `${currentHerName} doesn't want to go on a date with ${currentHisName}`,
-            icon: <span style={{ fontSize: "18px" }}>💔</span>,
-            style: { marginTop: "5vh" },
-            className: "alert-message",
-        });
     };
 
     const nameUppercase = (name: string) => {
@@ -212,6 +214,15 @@ const DateGame = () => {
         return date.isSame(today, "day") || date.isAfter(today, "day");
     };
 
+
+    const onPanelChange = (value: Dayjs, mode: CalendarProps<Dayjs>['mode']) => {
+        console.log(value.format('DD-MM-YYYY'), mode);
+    };
+
+    const onDateSelect = (value: Dayjs) => {
+        setSelectedDate(value);
+        console.log("Date selected:", value.format("DD-MM-YYYY"));
+    };
 
     return (
         <div className='main-div'>
@@ -259,7 +270,8 @@ const DateGame = () => {
 
                             <Row gutter={[16, 16]} >
                                 <Col span={12} >
-                                    <Button className='yes-btn' onClick={() => { setDateAskingPage(false); }}
+                                    <Button className='yes-btn'
+                                        onClick={handleYesBtn}
                                         style={{ transform: `scale(${1 + timesHovered / 20})`, transition: "transform 0.2s ease" }}
                                     >
                                         Yes
@@ -269,6 +281,15 @@ const DateGame = () => {
                                     <Button className='no-btn' onMouseOver={() => { moveBtn(); countHover(); }} onTouchStart={() => { moveBtn(); countHover(); }} > No </Button>
                                 </Col>
                             </Row>
+
+                            <Modal
+                                footer={null}
+                                open={yayyModal}
+                                closable={false}
+                                className='do-you-really-love-me-modal'
+                            >
+                                <h2 className='do-you-wanna-go-out-with-me-text' style={{ textAlign: "center" }} >Yay.....!!!</h2>
+                            </Modal>
 
                             <Modal
                                 footer={null}
@@ -320,7 +341,7 @@ const DateGame = () => {
                                         });
                                         return;
                                     }
-                                    openModal();
+                                    openCalendarDateModal();
                                 }}>
                                     Save the date 💖
                                 </Button>
@@ -329,8 +350,8 @@ const DateGame = () => {
 
                         <Modal className='email-modal'
                             title="Send Email"
-                            open={isModalOpen}
-                            onCancel={() => setIsModalOpen(false)}
+                            open={calendarDateModal}
+                            onCancel={() => setCalendarDateModal(false)}
                             onOk={handleSendEmail}
                             okText="Send Email 💌"
                             okButtonProps={{
@@ -353,6 +374,7 @@ const DateGame = () => {
                             <Input className='email-inputs' style={{ marginBottom: "10px" }}
                                 value={yourEmail}
                                 onChange={(e) => setYourEmail(e.target.value)}
+                                onKeyDown={(e) => e.key === "Enter" && handleSendEmail()}
                                 status={yourEmail && !isValidGmail(yourEmail) ? "error" : ""}
                             />
 
@@ -360,6 +382,7 @@ const DateGame = () => {
                             <Input className='email-inputs' style={{ marginBottom: "10px" }}
                                 value={specialEmail}
                                 onChange={(e) => setSpecialEmail(e.target.value)}
+                                onKeyDown={(e) => e.key === "Enter" && handleSendEmail()}
                                 status={specialEmail && !isValidGmail(specialEmail) ? "error" : ""}
                             />
                             <p style={{ color: "#FF5A76", fontSize: "14px", marginTop: "8px" }}>
